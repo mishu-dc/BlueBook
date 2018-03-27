@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using BlueBook.DataAccess.Entities;
 using BlueBook.DataAccess.Mappings;
 using System;
+using System.Data.Common;
 
 namespace BlueBook.DataAccess.Configurations
 {
@@ -13,6 +14,12 @@ namespace BlueBook.DataAccess.Configurations
         public ApplicationDbContext()
             : base("BlueBook", throwIfV1Schema: false)
         {
+        }
+
+        public ApplicationDbContext(DbConnection context)
+            :base(context,true)
+        {
+
         }
 
         DbSet<Brand> Brands { get; set; }

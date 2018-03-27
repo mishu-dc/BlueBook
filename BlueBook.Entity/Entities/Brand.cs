@@ -8,6 +8,11 @@ namespace BlueBook.DataAccess.Entities
 {
     public class Brand: EntityBase
     {
+        public Brand()
+        {
+            Products = new List<Product>();
+        }
+
         public string Code { get; set; }
         public string Name { get; set; }
         public List<Product> Products { get; set; }
