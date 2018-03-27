@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBook.MvcUi", "BlueBook.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBook.MvcUi.Tests", "BlueBook.MvcUi.Tests\BlueBook.MvcUi.Tests.csproj", "{6FA9E097-BC9D-415B-8781-C47910364B7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBook.DataAccess.Tests", "BlueBook.DataAccess.Tests\BlueBook.DataAccess.Tests.csproj", "{8FD23730-9720-47AC-83B3-7610FAA1E931}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6FA9E097-BC9D-415B-8781-C47910364B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FA9E097-BC9D-415B-8781-C47910364B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FA9E097-BC9D-415B-8781-C47910364B7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FD23730-9720-47AC-83B3-7610FAA1E931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FD23730-9720-47AC-83B3-7610FAA1E931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FD23730-9720-47AC-83B3-7610FAA1E931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FD23730-9720-47AC-83B3-7610FAA1E931}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

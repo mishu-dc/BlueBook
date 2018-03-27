@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Effort;
 
 namespace BlueBook.MvcUi.Tests.Controllers
 {
@@ -18,7 +19,8 @@ namespace BlueBook.MvcUi.Tests.Controllers
             {
                 if (_unitOfWork == null)
                 {
-                    _unitOfWork = new UnitOfWork(new ApplicationDbContext());
+                    ApplicationDbContext dbContext = new ApplicationDbContext(Effort.DbConnectionFactory.CreateTransient());
+                    _unitOfWork = new UnitOfWork(dbContext);
                 }
                 return _unitOfWork;
             }
