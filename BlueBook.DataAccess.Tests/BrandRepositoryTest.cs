@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace BlueBook.DataAccess.Tests
 {
     [TestClass]
-    public class BrandRepository: BaseTest
+    public class BrandRepositoryTest: BaseTest
     {
-        public BrandRepository()
+        public BrandRepositoryTest()
             :base()
         {            
         }
