@@ -19,7 +19,7 @@ namespace BlueBook.Entity.Repositories.Interfaces
         TEntity Get(int id);
         Task<TEntity> GetAsync(int id);
 
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        List<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

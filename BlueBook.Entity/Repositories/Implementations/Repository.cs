@@ -50,12 +50,12 @@ namespace BlueBook.Entity.Repositories.Implementations
             return await Context.Set<TEntity>().FindAsync(id);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public List<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().Where(predicate);
+            return Context.Set<TEntity>().Where(predicate).ToList();
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await Context.Set<TEntity>().Where(predicate).ToListAsync();
         }

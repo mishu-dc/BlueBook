@@ -19,8 +19,9 @@ namespace BlueBook.DataAccess.Entities
         public String Code { get; set; }
         public String Name { get; set; }
         public MarketHierarchy Parent { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public MarketHierarchyType Type { get; set; }
         public List<FieldForce> FieldForces { get; set; }
+        public List<MarketHierarchy> MarketHierarchies { get; set; }
     }
 }

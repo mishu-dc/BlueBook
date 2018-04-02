@@ -8,6 +8,11 @@ namespace BlueBook.DataAccess.Entities
 {
     public class FieldForce: EntityBase
     {
+        public FieldForce()
+        {
+            Distributors = new List<Distributor>();
+        }
+
         public string Code { get; set; }
         public string Name { get; set; }
         public List<Distributor> Distributors { get; set; }

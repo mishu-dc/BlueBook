@@ -17,7 +17,6 @@ namespace BlueBook.DataAccess.Entities
         public EntityBase()
         {
             CreatedDate = DateTime.Now;
-            UpdatedDate = DateTime.Now;
         }
     }
 }

@@ -16,8 +16,11 @@ namespace BlueBook.DataAccess.Mappings
             Property(x => x.Type).IsRequired();
             Property(x => x.ParentId).IsOptional();
 
+            HasOptional(x => x.Parent).WithMany(y => y.MarketHierarchies).WillCascadeOnDelete(false);
+
+
             //This is optional. Fieldforce has a mapping for Markethierarchy
-            //HasMany(x => x.FieldForces).WithOptional(y => y.MarketHierarchy).HasForeignKey(x => x.MarketHierarchyId).WillCascadeOnDelete(false);
+            HasMany(x => x.FieldForces).WithOptional(y => y.MarketHierarchy).HasForeignKey(x => x.MarketHierarchyId).WillCascadeOnDelete(false);
         }
     }
 }
