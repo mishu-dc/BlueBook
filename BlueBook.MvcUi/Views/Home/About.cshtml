@@ -1,7 +1,37 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>@ViewBag.Title</h2>
 
-<p>Use this area to provide additional information.</p>
+<div class="list-group">
+    <a href="#" class="list-group-item active">
+        Blue Book is a Asp.Net MVC application. It has the following technologies:
+    </a>
+    <a href="#" class="list-group-item">
+        <h4>MVC 5</h4>
+    </a>
+    <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Entity Framework 6</h4>
+        <p class="list-group-item-text">install-package EntityFramework -version 6.1.1</p>
+        <p class="list-group-item-text"> install-Package Microsoft.AspNet.Identity.EntityFramework -Version 2.2.1</p>
+    </a>
+    <a href="#" class="list-group-item">
+        <h4>Repository Pattern</h4>
+    </a>
+
+    <a href="#" class="list-group-item">
+        <h4>Web API</h4>
+    </a>
+
+    <a href="#" class="list-group-item">
+        <h4>Ninject for Dependency Injection</h4>
+        <p class="list-group-item-text">Install-Package Ninject -Version 3.2.2</p>
+        <p class="list-group-item-text">Install-Package Ninject.MVC5 -Version 3.2.2</p>
+        <p class="list-group-item-text">Install-Package Ninject.Web.WebApi</p>
+        <p class="list-group-item-text">Install-Package Ninject.Web.Common.WebHost</p>
+    </a>
+
+    <a href="#" class="list-group-item">
+        <h4>Log4Net</h4>
+    </a>
+</div>

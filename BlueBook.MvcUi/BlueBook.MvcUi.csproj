@@ -215,57 +215,57 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\css\bootstrap\bootstrap-lumen.css" />
-    <Content Include="Assets\css\bootstrap\bootstrap-lumen.min.css" />
-    <Content Include="Assets\css\bootstrap\bootstrap-theme.css" />
-    <Content Include="Assets\css\bootstrap\bootstrap-theme.min.css" />
-    <Content Include="Assets\css\bootstrap\bootstrap.css" />
-    <Content Include="Assets\css\bootstrap\bootstrap.min.css" />
-    <Content Include="Assets\css\themes\base\accordion.css" />
-    <Content Include="Assets\css\themes\base\all.css" />
-    <Content Include="Assets\css\themes\base\autocomplete.css" />
-    <Content Include="Assets\css\themes\base\base.css" />
-    <Content Include="Assets\css\themes\base\button.css" />
-    <Content Include="Assets\css\themes\base\core.css" />
-    <Content Include="Assets\css\themes\base\datepicker.css" />
-    <Content Include="Assets\css\themes\base\dialog.css" />
-    <Content Include="Assets\css\themes\base\draggable.css" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Assets\css\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_444444_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_555555_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_777620_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_777777_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_cc0000_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Assets\css\themes\base\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Assets\css\themes\base\jquery-ui.css" />
-    <Content Include="Assets\css\themes\base\jquery-ui.min.css" />
-    <Content Include="Assets\css\themes\base\menu.css" />
-    <Content Include="Assets\css\themes\base\progressbar.css" />
-    <Content Include="Assets\css\themes\base\resizable.css" />
-    <Content Include="Assets\css\themes\base\selectable.css" />
-    <Content Include="Assets\css\themes\base\selectmenu.css" />
-    <Content Include="Assets\css\themes\base\slider.css" />
-    <Content Include="Assets\css\themes\base\sortable.css" />
-    <Content Include="Assets\css\themes\base\spinner.css" />
-    <Content Include="Assets\css\themes\base\tabs.css" />
-    <Content Include="Assets\css\themes\base\theme.css" />
-    <Content Include="Assets\css\themes\base\tooltip.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-lumen.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-lumen.min.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-theme.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-theme.min.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\Css\themes\base\accordion.css" />
+    <Content Include="Assets\Css\themes\base\all.css" />
+    <Content Include="Assets\Css\themes\base\autocomplete.css" />
+    <Content Include="Assets\Css\themes\base\base.css" />
+    <Content Include="Assets\Css\themes\base\button.css" />
+    <Content Include="Assets\Css\themes\base\core.css" />
+    <Content Include="Assets\Css\themes\base\datepicker.css" />
+    <Content Include="Assets\Css\themes\base\dialog.css" />
+    <Content Include="Assets\Css\themes\base\draggable.css" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Assets\Css\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Assets\Css\themes\base\jquery-ui.css" />
+    <Content Include="Assets\Css\themes\base\jquery-ui.min.css" />
+    <Content Include="Assets\Css\themes\base\menu.css" />
+    <Content Include="Assets\Css\themes\base\progressbar.css" />
+    <Content Include="Assets\Css\themes\base\resizable.css" />
+    <Content Include="Assets\Css\themes\base\selectable.css" />
+    <Content Include="Assets\Css\themes\base\selectmenu.css" />
+    <Content Include="Assets\Css\themes\base\slider.css" />
+    <Content Include="Assets\Css\themes\base\sortable.css" />
+    <Content Include="Assets\Css\themes\base\spinner.css" />
+    <Content Include="Assets\Css\themes\base\tabs.css" />
+    <Content Include="Assets\Css\themes\base\theme.css" />
+    <Content Include="Assets\Css\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="Assets\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Assets\css\Site.css" />
+    <Content Include="Assets\Css\Site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -318,18 +318,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Assets\Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Assets\css\bootstrap\bootstrap.min.css.map" />
-    <Content Include="Assets\css\bootstrap\bootstrap.css.map" />
-    <Content Include="Assets\css\bootstrap\bootstrap-theme.min.css.map" />
-    <Content Include="Assets\css\bootstrap\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <Content Include="Assets\Css\bootstrap\bootstrap.min.css.map" />
+    <Content Include="Assets\Css\bootstrap\bootstrap.css.map" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-theme.min.css.map" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-theme.css.map" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Assets\Scripts\jQuery\jquery-3.3.1.slim.min.map" />
     <Content Include="Assets\Scripts\jQuery\jquery-3.3.1.min.map" />
   </ItemGroup>
