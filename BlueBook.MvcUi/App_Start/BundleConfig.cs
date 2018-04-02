@@ -17,9 +17,15 @@ namespace BlueBook.MvcUi
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Assets/Scripts/bootstrap/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/gijgo").Include(
+                      "~/Assets/Scripts/gijgo/combined/gijgo.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Assets/css/bootstrap/bootstrap-lumen.css",
                       "~/Assets/css/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/gijgo").Include(
+                      "~/Assets/css/gijgo/combined/gijgo.css"));
         }
     }
 }
