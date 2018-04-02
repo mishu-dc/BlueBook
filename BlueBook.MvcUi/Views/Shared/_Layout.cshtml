@@ -21,6 +21,23 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                Basic <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Distributor(s)", "Index", "Distributor")</li>
+                                <li>@Html.ActionLink("Market(s)", "Index", "MarketHierarchy")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Brand(s)", "Index", "Brand")</li>
+                                <li>@Html.ActionLink("Products(s)", "Index", "Product")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Field Force(s)", "Index", "FieldForce")</li>
+                            </ul>
+                        </li>
+                    }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
