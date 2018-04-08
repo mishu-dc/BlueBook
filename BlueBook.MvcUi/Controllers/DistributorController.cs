@@ -1,6 +1,7 @@
 ﻿using BlueBook.DataAccess.Entities;
 using BlueBook.Entity.Configurations;
 using BlueBook.MvcUi.Models;
+using BlueBook.MvcUi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,14 @@ namespace BlueBook.MvcUi.Controllers
             return View();
         }
 
-        public async Task<JsonResult> List(int? page, int? limit, string sortBy, string direction, string code, string name)
+        public async Task<JsonResult> ListAsync(int? page, int? limit, string sortBy, string direction, string code, string name)
         {
             try
             {
-                List<Distributor> records = await _unitOfWork.Distributors.GetDistributorsByPageAsync(page, limit, sortBy, direction, code, name);
-                int total = await _unitOfWork.Distributors.GetTotalDistributorsAsync(page, limit, sortBy, direction, code, name);
+                DistributorModel model = new DistributorModel(_unitOfWork);
+
+                List<Distributor> records = await model.GetDistributorsByPageAsync(page, limit, sortBy, direction, code, name);
+                int total = await model.GetTotalDistributorsAsync(page, limit, sortBy, direction, code, name);
 
                 return this.Json(new { records, total }, JsonRequestBehavior.AllowGet);
             }
@@ -40,62 +43,40 @@ namespace BlueBook.MvcUi.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Save(DistributorModel record)
+        public async Task<JsonResult> SaveAsync(DistributorViewModel record)
         {
-            Distributor distributor = new Distributor();
-
-            if (ModelState.IsValid)
+            try
             {
-                if (record.Id!=null)
+                DistributorModel model = new DistributorModel(_unitOfWork);
+                if (ModelState.IsValid)
                 {
-                    distributor = _unitOfWork.Distributors.Get(record.Id.Value);
-                    if (distributor == null)
-                    {
-                        return Json(new { result = false }, JsonRequestBehavior.AllowGet);
-                    }
-
-                    distributor.UpdatedBy = User.Identity.Name;
-                    distributor.UpdatedDate = DateTime.Now;
+                    await model.SaveAsync(record);
+                    return Json(new { result = true }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    distributor.CreatedBy = User.Identity.Name;
+                    return Json(new { result = false }, JsonRequestBehavior.AllowGet);
                 }
-
-                distributor.Code = record.Code;
-                distributor.Name = record.Name;
-                distributor.Address = record.Address;
-
-
-                if (record.Id == null)
-                {
-                    _unitOfWork.Distributors.Add(distributor);
-                }
-
-                await _unitOfWork.CompleteAsync();
-
-                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
-            else
+            catch(Exception ex)
             {
-                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
         [HttpPost]
-        public async Task<JsonResult> Delete(int id)
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            Distributor distributor = await _unitOfWork.Distributors.GetAsync(id);
-
-            if (distributor == null)
+            try
             {
-                return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+                DistributorModel model = new DistributorModel(_unitOfWork);
+                await model.DeleteAsync(id);
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
-
-            _unitOfWork.Distributors.Remove(distributor);
-            await _unitOfWork.CompleteAsync();
-
-            return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+                return Json(new { result = false, ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

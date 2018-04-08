@@ -17,7 +17,7 @@ function Save() {
         Address: $('#Address').val()
     };
 
-    $.ajax({ url: '/Distributor/Save', data: { record: record }, method: 'POST' })
+    $.ajax({ url: '/Distributor/SaveAsync', data: { record: record }, method: 'POST' })
         .done(function () {
             dialog.close();
             grid.reload({ code: $('#txtCode').val(), name: $('#txtName').val() });
@@ -29,7 +29,7 @@ function Save() {
 
 function Delete(e) {
     if (confirm('Are you sure to delete the entry?')) {
-        $.ajax({ url: '/Distributor/Delete', data: { Id: e.data.id }, method: 'POST' })
+        $.ajax({ url: '/Distributor/DeleteAsync', data: { Id: e.data.id }, method: 'POST' })
             .done(function () {
                 grid.reload({ code: $('#txtCode').val(), name: $('#txtName').val() });
             })
@@ -42,7 +42,7 @@ function Delete(e) {
 $(document).ready(function () {
     grid = $('#grid').grid({
         primaryKey: 'Id',
-        dataSource: '/Distributor/List',
+        dataSource: '/Distributor/ListAsync',
         uiLibrary: 'bootstrap',
         columns: [
             { field: 'Id', width: 56 },
