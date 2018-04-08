@@ -21,7 +21,7 @@ namespace BlueBook.MvcUi
                       "~/Assets/Scripts/gijgo/combined/gijgo.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Assets/css/bootstrap/bootstrap-lumen.css",
+                      "~/Assets/css/bootstrap/bootstrap-cerulean.css",
                       "~/Assets/css/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/gijgo").Include(
