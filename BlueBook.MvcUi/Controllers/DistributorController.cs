@@ -44,10 +44,10 @@ namespace BlueBook.MvcUi.Controllers
 
                 return this.Json(new { records, total }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                logger.Error("Error while invoking List action method: " , ex);
-                return this.Json(ex.Message, JsonRequestBehavior.AllowGet);
+                logger.Error("Error while invoking List action method: ", ex);
+                return this.Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -68,10 +68,10 @@ namespace BlueBook.MvcUi.Controllers
                     return Json(new { result = false }, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error("Error while invoking Save action method: ", ex);
-                return Json(new { result = false, ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -88,7 +88,7 @@ namespace BlueBook.MvcUi.Controllers
             catch (Exception ex)
             {
                 logger.Error("Error while invoking Delete action method: ", ex);
-                return Json(new { result = false, ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }
