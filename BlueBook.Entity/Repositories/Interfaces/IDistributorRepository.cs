@@ -9,6 +9,7 @@ namespace BlueBook.Entity.Repositories.Interfaces
 {
     public interface IDistributorRepository:IRepository<Distributor>
     {
-
+        Task<List<Distributor>> GetDistributorsByPageAsync(int? page, int? limit, string sortBy, string direction, string code, string name);
+        Task<int> GetTotalDistributorsAsync(int? page, int? limit, string sortBy, string direction, string code, string name);
     }
 }

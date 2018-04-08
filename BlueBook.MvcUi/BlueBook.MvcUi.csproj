@@ -214,18 +214,24 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DistributorModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Css\bootstrap\bootstrap-cerulean.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-cerulean.min.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-cosmo.css" />
+    <Content Include="Assets\Css\bootstrap\bootstrap-cosmo.min.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap-lumen.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap-lumen.min.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap-theme.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\Scripts\basic\distributor.js" />
     <Content Include="Assets\Css\gijgo\combined\demo.css" />
     <Content Include="Assets\Css\gijgo\combined\demo.min.css" />
     <Content Include="Assets\Css\gijgo\combined\gijgo.css" />
@@ -247,13 +253,14 @@
     <Content Include="Assets\Css\gijgo\modular\editor.min.css" />
     <Content Include="Assets\Css\gijgo\modular\grid.css" />
     <Content Include="Assets\Css\gijgo\modular\grid.min.css" />
+    <Content Include="Assets\Css\gijgo\modular\slider.css" />
+    <Content Include="Assets\Css\gijgo\modular\slider.min.css" />
     <Content Include="Assets\Css\gijgo\modular\timepicker.css" />
     <Content Include="Assets\Css\gijgo\modular\timepicker.min.css" />
     <Content Include="Assets\Css\gijgo\modular\tree.css" />
     <Content Include="Assets\Css\gijgo\modular\tree.min.css" />
-    <Content Include="Assets\Scripts\basic\distributor.js" />
     <Content Include="favicon.ico" />
-    <Content Include="Assets\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Assets\Css\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Assets\Css\Site.css" />
     <Content Include="ApplicationInsights.config">
@@ -305,6 +312,8 @@
     <Content Include="Assets\Scripts\gijgo\modular\editor.min.js" />
     <Content Include="Assets\Scripts\gijgo\modular\grid.js" />
     <Content Include="Assets\Scripts\gijgo\modular\grid.min.js" />
+    <Content Include="Assets\Scripts\gijgo\modular\slider.js" />
+    <Content Include="Assets\Scripts\gijgo\modular\slider.min.js" />
     <Content Include="Assets\Scripts\gijgo\modular\timepicker.js" />
     <Content Include="Assets\Scripts\gijgo\modular\timepicker.min.js" />
     <Content Include="Assets\Scripts\gijgo\modular\tree.js" />
@@ -353,10 +362,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Assets\Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Assets\Fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Assets\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Assets\Css\Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\Css\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\Css\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\Css\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\Css\bootstrap\bootstrap.min.css.map" />
     <Content Include="Assets\Css\bootstrap\bootstrap.css.map" />
     <Content Include="Assets\Css\bootstrap\bootstrap-theme.min.css.map" />
