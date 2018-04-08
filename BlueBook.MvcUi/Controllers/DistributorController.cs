@@ -40,7 +40,7 @@ namespace BlueBook.MvcUi.Controllers
         }
 
         [HttpPost]
-        public JsonResult Save(DistributorModel record)
+        public async Task<JsonResult> Save(DistributorModel record)
         {
             Distributor distributor = new Distributor();
 
@@ -49,12 +49,13 @@ namespace BlueBook.MvcUi.Controllers
                 if (record.Id!=null)
                 {
                     distributor = _unitOfWork.Distributors.Get(record.Id.Value);
-                    distributor.UpdatedBy = User.Identity.Name;
-                    distributor.UpdatedDate = DateTime.Now;
                     if (distributor == null)
                     {
                         return Json(new { result = false }, JsonRequestBehavior.AllowGet);
                     }
+
+                    distributor.UpdatedBy = User.Identity.Name;
+                    distributor.UpdatedDate = DateTime.Now;
                 }
                 else
                 {
@@ -66,9 +67,12 @@ namespace BlueBook.MvcUi.Controllers
                 distributor.Address = record.Address;
 
 
-                _unitOfWork.Distributors.Add(distributor);
+                if (record.Id == null)
+                {
+                    _unitOfWork.Distributors.Add(distributor);
+                }
 
-                 _unitOfWork.Complete();
+                await _unitOfWork.CompleteAsync();
 
                 return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
