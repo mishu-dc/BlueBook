@@ -1,5 +1,5 @@
 /*
- * Gijgo JavaScript Library v1.9.4
+ * Gijgo JavaScript Library v1.9.6
  * http://gijgo.com/
  *
  * Copyright 2014, 2018 gijgo.com
@@ -542,6 +542,40 @@ gj.core = {
         }
 
         return result;
+    },
+
+    addClasses: function (el, classes) {
+        var i, arr;
+        if (classes) {
+            arr = classes.split(' ');
+            for (i = 0; i < arr.length; i++) {
+                el.classList.add(arr[i]);
+            }
+        }
+    },
+
+    position: function (elem, padding, margin) {
+        var box = elem.getBoundingClientRect(),
+            body = document.body,
+            bodyStyle = window.getComputedStyle(body),
+            docEl = document.documentElement,
+            scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop,
+            scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft,
+            clientTop = docEl.clientTop || body.clientTop || 0,
+            clientLeft = docEl.clientLeft || body.clientLeft || 0,
+            top = Math.round(box.top + scrollTop - clientTop),
+            left = Math.round(box.left + scrollLeft - clientLeft);
+
+        if (padding) {
+            top += parseInt(bodyStyle.paddingTop || 0, 10);
+            left += parseInt(bodyStyle.paddingLeft || 0, 10);
+        }
+        if (margin) {
+            top += parseInt(bodyStyle.marginTop || 0, 10);
+            left += parseInt(bodyStyle.marginLeft || 0, 10);
+        }
+
+        return { top: top, left: left, bottom: top + gj.core.height(elem), right: left + gj.core.width(elem) };
     }
 };
 /* global window alert jQuery */
@@ -560,7 +594,7 @@ gj.dialog.config = {
          * If false, the dialog will stay hidden until the open() method is called.
          * @type boolean
          * @default true
-         * @example True <!-- dialog.base, draggable.base -->
+         * @example True <!-- dialog.base, draggable -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
@@ -582,7 +616,7 @@ gj.dialog.config = {
         /** Specifies whether the dialog should have a close button in right part of dialog header.
          * @type boolean
          * @default true
-         * @example True <!-- dialog.base, draggable.base -->
+         * @example True <!-- dialog.base, draggable -->
          * <div id="dialog">
          *     <div data-role="header"><h4 data-role="title">Dialog</h4></div>
          *     <div data-role="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
@@ -597,7 +631,7 @@ gj.dialog.config = {
          *         height: 200
          *     });
          * </script>
-         * @example False <!-- dialog.base, draggable.base -->
+         * @example False <!-- dialog.base, draggable -->
          * <div id="dialog">
          *     <div data-role="header"><h4 data-role="title">Dialog</h4></div>
          *     <div data-role="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
@@ -624,7 +658,7 @@ gj.dialog.config = {
          *         closeOnEscape: true
          *     });
          * </script>
-         * @example False <!-- dialog.base, draggable.base -->
+         * @example False <!-- dialog.base, draggable -->
          * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
@@ -637,14 +671,14 @@ gj.dialog.config = {
         /** If set to true, the dialog will be draggable by the title bar.
          * @type boolean
          * @default true
-         * @example True <!-- draggable.base, dialog.base -->
+         * @example True <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
          *         draggable: true
          *     });
          * </script>
-         * @example False <!-- draggable.base, dialog.base -->
+         * @example False <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
@@ -659,21 +693,21 @@ gj.dialog.config = {
          * The only supported string value is "auto" which will allow the dialog height to adjust based on its content.
          * @type (number|string)
          * @default "auto"
-         * @example Short.Text <!-- draggable.base, dialog.base -->
+         * @example Short.Text <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
          *         height: 200
          *     });
          * </script>
-         * @example Long.Text.Material.Design <!-- draggable.base, dialog.base -->
+         * @example Long.Text.Material.Design <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porttitor quam in magna vulputate, vitae laoreet odio ultrices. Phasellus at efficitur magna. Mauris purus dolor, egestas quis leo et, vulputate dictum mauris. Vivamus maximus lectus sollicitudin lorem blandit tempor. Maecenas eget posuere mi. Suspendisse id hendrerit nibh. Morbi eu odio euismod, venenatis ipsum in, egestas nunc. Mauris dignissim metus ac risus porta eleifend. Aliquam tempus libero orci, id placerat odio vehicula eu. Donec tincidunt justo dolor, sit amet tempus turpis varius sit amet. Suspendisse ut ex blandit, hendrerit enim tristique, iaculis ipsum. Vivamus venenatis dolor justo, eget scelerisque lacus dignissim quis. Duis imperdiet ex at aliquet cursus. Proin non ultricies leo. Fusce quam diam, laoreet quis fringilla vitae, viverra id magna. Nam laoreet sem in volutpat rhoncus.</div>
          * <script>
          *     $("#dialog").dialog({
          *         height: 350
          *     });
          * </script>
-         * @example Long.Text.Bootstrap3 <!-- bootstrap, draggable.base, dialog.base -->
+         * @example Long.Text.Bootstrap3 <!-- bootstrap, draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porttitor quam in magna vulputate, vitae laoreet odio ultrices. Phasellus at efficitur magna. Mauris purus dolor, egestas quis leo et, vulputate dictum mauris. Vivamus maximus lectus sollicitudin lorem blandit tempor. Maecenas eget posuere mi. Suspendisse id hendrerit nibh. Morbi eu odio euismod, venenatis ipsum in, egestas nunc. Mauris dignissim metus ac risus porta eleifend. Aliquam tempus libero orci, id placerat odio vehicula eu. Donec tincidunt justo dolor, sit amet tempus turpis varius sit amet. Suspendisse ut ex blandit, hendrerit enim tristique, iaculis ipsum. Vivamus venenatis dolor justo, eget scelerisque lacus dignissim quis. Duis imperdiet ex at aliquet cursus. Proin non ultricies leo. Fusce quam diam, laoreet quis fringilla vitae, viverra id magna. Nam laoreet sem in volutpat rhoncus.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -681,7 +715,7 @@ gj.dialog.config = {
          *         uiLibrary: 'bootstrap'
          *     });
          * </script>
-         * @example Long.Text.Bootstrap4 <!-- bootstrap4, draggable.base, dialog.base -->
+         * @example Long.Text.Bootstrap4 <!-- bootstrap4, draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porttitor quam in magna vulputate, vitae laoreet odio ultrices. Phasellus at efficitur magna. Mauris purus dolor, egestas quis leo et, vulputate dictum mauris. Vivamus maximus lectus sollicitudin lorem blandit tempor. Maecenas eget posuere mi. Suspendisse id hendrerit nibh. Morbi eu odio euismod, venenatis ipsum in, egestas nunc. Mauris dignissim metus ac risus porta eleifend. Aliquam tempus libero orci, id placerat odio vehicula eu. Donec tincidunt justo dolor, sit amet tempus turpis varius sit amet. Suspendisse ut ex blandit, hendrerit enim tristique, iaculis ipsum. Vivamus venenatis dolor justo, eget scelerisque lacus dignissim quis. Duis imperdiet ex at aliquet cursus. Proin non ultricies leo. Fusce quam diam, laoreet quis fringilla vitae, viverra id magna. Nam laoreet sem in volutpat rhoncus.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -695,7 +729,7 @@ gj.dialog.config = {
         /** The language that needs to be in use.
          * @type string
          * @default 'en-us'
-         * @example French.Default <!-- draggable.base, dialog.base-->
+         * @example French.Default <!-- draggable, dialog.base-->
          * <script src="../../dist/modular/dialog/js/messages/messages.fr-fr.js"></script>
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
@@ -704,7 +738,7 @@ gj.dialog.config = {
          *         locale: 'fr-fr'
          *     });
          * </script>
-         * @example French.Custom <!-- draggable.base, dialog.base -->
+         * @example French.Custom <!-- draggable, dialog.base -->
          * <script src="../../dist/modular/dialog/js/messages/messages.fr-fr.js"></script>
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
@@ -721,7 +755,7 @@ gj.dialog.config = {
         /** The maximum height in pixels to which the dialog can be resized.
          * @type number
          * @default undefined
-         * @example sample <!-- draggable.base, dialog.base -->
+         * @example sample <!-- draggable, dialog.base -->
          * <div id="dialog">The maximum height of this dialog is set to 300 px. Try to resize it for testing.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -736,7 +770,7 @@ gj.dialog.config = {
         /** The maximum width in pixels to which the dialog can be resized.
          * @type number
          * @default undefined
-         * @example sample <!-- draggable.base, dialog.base -->
+         * @example sample <!-- draggable, dialog.base -->
          * <div id="dialog">The maximum width of this dialog is set to 400 px. Try to resize it for testing.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -750,7 +784,7 @@ gj.dialog.config = {
         /** The minimum height in pixels to which the dialog can be resized.
          * @type number
          * @default undefined
-         * @example sample <!-- draggable.base, dialog.base -->
+         * @example sample <!-- draggable, dialog.base -->
          * <div id="dialog">The minimum height of this dialog is set to 200 px. Try to resize it for testing.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -765,7 +799,7 @@ gj.dialog.config = {
         /** The minimum width in pixels to which the dialog can be resized.
          * @type number
          * @default undefined
-         * @example sample <!-- draggable.base, dialog.base -->
+         * @example sample <!-- draggable, dialog.base -->
          * <div id="dialog">The minimum width of this dialog is set to 200 px. Try to resize it for testing.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -780,14 +814,14 @@ gj.dialog.config = {
          * Modal dialogs create an overlay below the dialog, but above other page elements and you can't interact with them.
          * @type boolean
          * @default false
-         * @example True.Material.Design <!-- draggable.base, dialog.base -->
+         * @example True.Material.Design <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
          *         modal: true
          *     });
          * </script>
-         * @example True.Bootstrap.4 <!-- bootstrap4, draggable.base, dialog.base -->
+         * @example True.Bootstrap.4 <!-- bootstrap4, draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
@@ -795,7 +829,7 @@ gj.dialog.config = {
          *         uiLibrary: 'bootstrap4'
          *     });
          * </script>
-         * @example False <!-- draggable.base, dialog.base, bootstrap -->
+         * @example False <!-- draggable, dialog.base, bootstrap -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
@@ -808,14 +842,14 @@ gj.dialog.config = {
         /** If set to true, the dialog will be resizable.
          * @type boolean
          * @default false
-         * @example True <!-- draggable.base, dialog.base -->
+         * @example True <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
          *         resizable: true
          *     });
          * </script>
-         * @example False <!-- draggable.base, dialog.base -->
+         * @example False <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
@@ -828,7 +862,7 @@ gj.dialog.config = {
         /** If set to true, add vertical scroller to the dialog body.
          * @type Boolean
          * @default false
-         * @example Bootstrap.3 <!-- bootstrap, draggable.base, dialog.base -->
+         * @example Bootstrap.3 <!-- bootstrap, draggable, dialog.base -->
          * <div id="dialog">
          *     <div data-role="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porttitor quam in magna vulputate, vitae laoreet odio ultrices. Phasellus at efficitur magna. Mauris purus dolor, egestas quis leo et, vulputate dictum mauris. Vivamus maximus lectus sollicitudin lorem blandit tempor. Maecenas eget posuere mi. Suspendisse id hendrerit nibh. Morbi eu odio euismod, venenatis ipsum in, egestas nunc. Mauris dignissim metus ac risus porta eleifend. Aliquam tempus libero orci, id placerat odio vehicula eu. Donec tincidunt justo dolor, sit amet tempus turpis varius sit amet. Suspendisse ut ex blandit, hendrerit enim tristique, iaculis ipsum. Vivamus venenatis dolor justo, eget scelerisque lacus dignissim quis. Duis imperdiet ex at aliquet cursus. Proin non ultricies leo. Fusce quam diam, laoreet quis fringilla vitae, viverra id magna. Nam laoreet sem in volutpat rhoncus.</div>
          *     <div data-role="footer">
@@ -843,7 +877,7 @@ gj.dialog.config = {
          *         uiLibrary: 'bootstrap'
          *     });
          * </script>
-         * @example Bootstrap.4 <!-- bootstrap4, draggable.base, dialog.base -->
+         * @example Bootstrap.4 <!-- bootstrap4, draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porttitor quam in magna vulputate, vitae laoreet odio ultrices. Phasellus at efficitur magna. Mauris purus dolor, egestas quis leo et, vulputate dictum mauris. Vivamus maximus lectus sollicitudin lorem blandit tempor. Maecenas eget posuere mi. Suspendisse id hendrerit nibh. Morbi eu odio euismod, venenatis ipsum in, egestas nunc. Mauris dignissim metus ac risus porta eleifend. Aliquam tempus libero orci, id placerat odio vehicula eu. Donec tincidunt justo dolor, sit amet tempus turpis varius sit amet. Suspendisse ut ex blandit, hendrerit enim tristique, iaculis ipsum. Vivamus venenatis dolor justo, eget scelerisque lacus dignissim quis. Duis imperdiet ex at aliquet cursus. Proin non ultricies leo. Fusce quam diam, laoreet quis fringilla vitae, viverra id magna. Nam laoreet sem in volutpat rhoncus.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -852,7 +886,7 @@ gj.dialog.config = {
          *         uiLibrary: 'bootstrap'
          *     });
          * </script>
-         * @example Material.Design <!-- draggable.base, dialog.base -->
+         * @example Material.Design <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porttitor quam in magna vulputate, vitae laoreet odio ultrices. Phasellus at efficitur magna. Mauris purus dolor, egestas quis leo et, vulputate dictum mauris. Vivamus maximus lectus sollicitudin lorem blandit tempor. Maecenas eget posuere mi. Suspendisse id hendrerit nibh. Morbi eu odio euismod, venenatis ipsum in, egestas nunc. Mauris dignissim metus ac risus porta eleifend. Aliquam tempus libero orci, id placerat odio vehicula eu. Donec tincidunt justo dolor, sit amet tempus turpis varius sit amet. Suspendisse ut ex blandit, hendrerit enim tristique, iaculis ipsum. Vivamus venenatis dolor justo, eget scelerisque lacus dignissim quis. Duis imperdiet ex at aliquet cursus. Proin non ultricies leo. Fusce quam diam, laoreet quis fringilla vitae, viverra id magna. Nam laoreet sem in volutpat rhoncus.</div>
          * <script>
          *     $("#dialog").dialog({
@@ -867,7 +901,7 @@ gj.dialog.config = {
         /** The title of the dialog. Can be also set through the title attribute of the html element.
          * @type String
          * @default "Dialog"
-         * @example Js.Config <!-- draggable.base, dialog.base -->
+         * @example Js.Config <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
@@ -875,7 +909,7 @@ gj.dialog.config = {
          *         width: 400
          *     });
          * </script>
-         * @example Html.Config <!-- draggable.base, dialog.base -->
+         * @example Html.Config <!-- draggable, dialog.base -->
          * <div id="dialog" title="My Custom Title" width="400">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog();
@@ -887,14 +921,14 @@ gj.dialog.config = {
          * @additionalinfo The css file for bootstrap should be manually included if you use bootstrap.
          * @type string (bootstrap|materialdesign)
          * @default undefined
-         * @example Bootstrap.3 <!-- draggable.base, dialog.base, bootstrap -->
+         * @example Bootstrap.3 <!-- draggable, dialog.base, bootstrap -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
          *         uiLibrary: 'bootstrap'
          *     });
          * </script>
-         * @example Bootstrap.4 <!-- draggable.base, dialog.base, bootstrap4 -->
+         * @example Bootstrap.4 <!-- draggable, dialog.base, bootstrap4 -->
          * <div id="dialog">
          *     <div data-role="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          *     <div data-role="footer">
@@ -907,7 +941,7 @@ gj.dialog.config = {
          *         uiLibrary: 'bootstrap4'
          *     });
          * </script>
-         * @example Material.Design <!-- draggable.base, dialog.base  -->
+         * @example Material.Design <!-- draggable, dialog.base  -->
          * <div id="dialog">
          *   <div data-role="body">
          *     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -930,14 +964,14 @@ gj.dialog.config = {
         /** The width of the dialog.
          * @type number
          * @default 300
-         * @example Fixed.Width <!-- draggable.base, dialog.base -->
+         * @example Fixed.Width <!-- draggable, dialog.base -->
          * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
          * <script>
          *     $("#dialog").dialog({
          *         width: 400
          *     });
          * </script>
-         * @example Auto.Width <!-- draggable.base, dialog.base -->
+         * @example Auto.Width <!-- draggable, dialog.base -->
          * <div id="dialog" title="Wikipedia">
          *   <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png" width="420"/>
          * </div>
@@ -994,7 +1028,7 @@ gj.dialog.events = {
      *
      * @event initialized
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <script>
@@ -1014,7 +1048,7 @@ gj.dialog.events = {
      * Triggered before the dialog is opened.
      * @event opening
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <script>
@@ -1037,7 +1071,7 @@ gj.dialog.events = {
      * Triggered when the dialog is opened.
      * @event opened
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <script>
@@ -1060,7 +1094,7 @@ gj.dialog.events = {
      * Triggered before the dialog is closed.
      * @event closing
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Close the dialog in order to fire closing event.</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <script>
@@ -1083,7 +1117,7 @@ gj.dialog.events = {
      * Triggered when the dialog is closed.
      * @event closed
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Close the dialog in order to fire closed event.</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <script>
@@ -1106,7 +1140,7 @@ gj.dialog.events = {
      * Triggered while the dialog is being dragged.
      * @event drag
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <div id="logPanel" class="col-xs-12 well pre-scrollable" style="height: 200px"></div>
      * <script>
@@ -1132,7 +1166,7 @@ gj.dialog.events = {
      * Triggered when the user starts dragging the dialog.
      * @event dragStart
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <div id="logPanel" class="col-xs-12 well pre-scrollable" style="height: 200px"></div>
      * <script>
@@ -1158,7 +1192,7 @@ gj.dialog.events = {
      * Triggered after the dialog has been dragged.
      * @event dragStop
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <div id="logPanel" class="col-xs-12 well pre-scrollable" style="height: 200px"></div>
      * <script>
@@ -1184,7 +1218,7 @@ gj.dialog.events = {
      * Triggered while the dialog is being resized.
      * @event resize
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <div id="logPanel" class="col-xs-12 well pre-scrollable" style="height: 200px"></div>
      * <script>
@@ -1211,7 +1245,7 @@ gj.dialog.events = {
      * Triggered when the user starts resizing the dialog.
      * @event resizeStart
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <div id="logPanel" class="col-xs-12 well pre-scrollable" style="height: 200px"></div>
      * <script>
@@ -1238,7 +1272,7 @@ gj.dialog.events = {
      * Triggered after the dialog has been resized.
      * @event resizeStop
      * @param {object} e - event data
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <div id="logPanel" class="col-xs-12 well pre-scrollable" style="height: 200px"></div>
      * <script>
@@ -1428,14 +1462,16 @@ gj.dialog.methods = {
         $dialog.append($('<div class="gj-resizable-handle gj-resizable-se"></div>').draggable($.extend(true, {}, config)));
     },
 
-    resize: function (e, offset) {
-        var $el, $dialog, data, height, width, top, left, result = false;
+    resize: function (e, newPosition) {
+        var $el, $dialog, position, data, height, width, top, left, result = false;
 
         $el = $(this);
         $dialog = $el.parent();
+        position = gj.core.position(this);
+        offset = { top: newPosition.top - position.top, left: newPosition.left - position.left };
         data = $dialog.data();
 
-        //TODO: Include margins in the calculations
+        // TODO: Include margins in the calculations
         if ($el.hasClass('gj-resizable-n')) {
             height = $dialog.height() - offset.top;
             top = $dialog.offset().top + offset.top;
@@ -1562,7 +1598,7 @@ gj.dialog.widget = function ($element, jsConfig) {
      * @param {String} title - The dialog title.
      * @fires opening, opened
      * @return dialog
-     * @example Sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example Sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <script>
@@ -1570,7 +1606,7 @@ gj.dialog.widget = function ($element, jsConfig) {
      *         autoOpen: false
      *     });
      * </script>
-     * @example Title <!-- draggable.base, dialog.base, bootstrap -->
+     * @example Title <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="dialog.open('Custom Text')" class="gj-button-md">Open Dialog</button>
      * <script>
@@ -1588,7 +1624,7 @@ gj.dialog.widget = function ($element, jsConfig) {
      * @method
      * @fires closing, closed
      * @return dialog
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <button onclick="dialog.close()" class="gj-button-md">Close Dialog</button>
@@ -1604,7 +1640,7 @@ gj.dialog.widget = function ($element, jsConfig) {
      * Check if the dialog is currently open.
      * @method
      * @return boolean
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="dialog.open()" class="gj-button-md">Open Dialog</button>
      * <button onclick="dialog.close()" class="gj-button-md">Close Dialog</button>
@@ -1622,7 +1658,7 @@ gj.dialog.widget = function ($element, jsConfig) {
      * @method
      * @param {String} content - The content of the Dialog.
      * @return String|Dialog
-     * @example sample <!-- draggable.base, dialog.base, bootstrap -->
+     * @example sample <!-- draggable, dialog.base, bootstrap -->
      * <div id="dialog">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="alert(dialog.content())" class="btn btn-default">Get Content</button>
      * <button onclick="dialog.content('New Test Content Value')" class="btn btn-default">Set Content</button>
@@ -1639,7 +1675,7 @@ gj.dialog.widget = function ($element, jsConfig) {
      * @method
      * @param {boolean} keepHtml - If this flag is set to false, the dialog html markup will be removed from the HTML dom tree.
      * @return void
-     * @example Keep.HTML.Markup <!-- draggable.base, dialog.base -->
+     * @example Keep.HTML.Markup <!-- draggable, dialog.base -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="create()" class="gj-button-md">Create</button>
      * <button onclick="dialog.destroy()" class="gj-button-md">Destroy</button>
@@ -1649,7 +1685,7 @@ gj.dialog.widget = function ($element, jsConfig) {
      *         dialog = $('#dialog').dialog();
      *     }
      * </script>
-     * @example Remove.HTML.Markup <!-- draggable.base, dialog.base -->
+     * @example Remove.HTML.Markup <!-- draggable, dialog.base -->
      * <div id="dialog" style="display: none">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
      * <button onclick="create()" class="gj-button-md">Create</button>
      * <button onclick="dialog.destroy(false)" class="gj-button-md">Destroy</button>
@@ -1717,7 +1753,7 @@ gj.draggable.config = {
          * Only elements that descend from the draggable element are permitted.
          * @type jquery element
          * @default undefined
-         * @example sample <!-- draggable.base -->
+         * @example sample <!-- draggable -->
          * <style>
          * .element { border: 1px solid #999; width: 300px; height: 200px; }
          * .handle { background-color: #DDD; cursor: move; width: 200px; margin: 5px auto 0px auto; text-align: center; padding: 5px; }
@@ -1736,7 +1772,7 @@ gj.draggable.config = {
         /** If set to false, restricts dragging on vertical direction.
          * @type Boolean
          * @default true
-         * @example sample <!-- draggable.base -->
+         * @example sample <!-- draggable -->
          * <style>
          * .element { border: 1px solid #999; width: 300px; height: 200px; cursor: move; text-align: center; background-color: #DDD; }
          * </style>
@@ -1755,7 +1791,7 @@ gj.draggable.config = {
         /** If set to false, restricts dragging on horizontal direction.
          * @type Boolean
          * @default true
-         * @example sample <!-- draggable.base -->
+         * @example sample <!-- draggable -->
          * <style>
          * .element { border: 1px solid #999; width: 300px; height: 200px; cursor: move; text-align: center; background-color: #DDD; }
          * </style>
@@ -1769,25 +1805,49 @@ gj.draggable.config = {
          *     });
          * </script>
          */
-        horizontal: true
+        horizontal: true,
+
+        /** Constrains dragging to within the bounds of the specified element.
+         * @type Element
+         * @default undefined
+         * @example sample <!-- draggable -->
+         * <style>
+         * .container { border: 1px solid #999; width: 600px; height: 600px; }
+         * .element { border: 1px solid #999; width: 300px; height: 200px; cursor: move; text-align: center; background-color: #DDD; }
+         * </style>
+         * <div id="container" class="container">
+         *     <div id="element" class="element">drag me</div>
+         * </div>
+         * <script>
+         *     $('#element').draggable({
+         *         containment: document.getElementById('container')
+         *     });
+         * </script>
+         */
+        containment: undefined
     }
 };
 
 gj.draggable.methods = {
     init: function (jsConfig) {
-        var $handleEl, $dragEl = this;
+        var $handleEl, data, $dragEl = this;
 
         gj.widget.prototype.init.call(this, jsConfig, 'draggable');
+        data = this.data();
         $dragEl.attr('data-draggable', 'true');
 
         $handleEl = gj.draggable.methods.getHandleElement($dragEl);
 
         $handleEl.on('touchstart mousedown', function (e) {
-            $dragEl.attr('data-draggable-dragging', true);
-            $dragEl.removeAttr('data-draggable-x').removeAttr('data-draggable-y');
-            $dragEl.css('position', 'absolute');
-            gj.documentManager.subscribeForEvent('touchmove', $dragEl.data('guid'), gj.draggable.methods.createMoveHandler($dragEl));
-            gj.documentManager.subscribeForEvent('mousemove', $dragEl.data('guid'), gj.draggable.methods.createMoveHandler($dragEl));
+            var position = gj.core.position($dragEl[0]);
+            $dragEl[0].style.top = position.top + 'px';
+            $dragEl[0].style.left = position.left + 'px';
+            $dragEl[0].style.position = 'fixed';
+
+            $dragEl.attr('draggable-dragging', true);
+            $dragEl.removeAttr('draggable-x').removeAttr('draggable-y');
+            gj.documentManager.subscribeForEvent('touchmove', $dragEl.data('guid'), gj.draggable.methods.createMoveHandler($dragEl, $handleEl, data));
+            gj.documentManager.subscribeForEvent('mousemove', $dragEl.data('guid'), gj.draggable.methods.createMoveHandler($dragEl, $handleEl, data));
         });
 
         gj.documentManager.subscribeForEvent('mouseup', $dragEl.data('guid'), gj.draggable.methods.createUpHandler($dragEl));
@@ -1804,44 +1864,74 @@ gj.draggable.methods = {
 
     createUpHandler: function ($dragEl) {
         return function (e) {
-            if ($dragEl.attr('data-draggable-dragging') === 'true') {
-                $dragEl.attr('data-draggable-dragging', false);
+            if ($dragEl.attr('draggable-dragging') === 'true') {
+                $dragEl.attr('draggable-dragging', false);
                 gj.documentManager.unsubscribeForEvent('mousemove', $dragEl.data('guid'));
                 gj.documentManager.unsubscribeForEvent('touchmove', $dragEl.data('guid'));
-                gj.draggable.events.stop($dragEl, { left: $dragEl.mouseX(e), top: $dragEl.mouseY(e) });
+                gj.draggable.events.stop($dragEl, { x: $dragEl.mouseX(e), y: $dragEl.mouseY(e) });
             }
         };
     },
 
-    createMoveHandler: function ($dragEl) {
+    createMoveHandler: function ($dragEl, $handleEl, data) {
         return function (e) {
-            var x, y, offsetX, offsetY, prevX, prevY;
-            if ($dragEl.attr('data-draggable-dragging') === 'true') {
-                x = Math.round($dragEl.mouseX(e));
-                y = Math.round($dragEl.mouseY(e));
-                prevX = $dragEl.attr('data-draggable-x');
-                prevY = $dragEl.attr('data-draggable-y');
-                if (prevX && prevY) {                
-                    offsetX = $dragEl.data('horizontal') ? x - parseInt(prevX, 10) : 0;
-                    offsetY = $dragEl.data('vertical') ? y - parseInt(prevY, 10) : 0;
-                    if (false !== gj.draggable.events.drag($dragEl, offsetX, offsetY, x, y)) {
-                        gj.draggable.methods.move($dragEl, offsetX, offsetY);
-                    }
+            var mouseX, mouseY, offsetX, offsetY, prevX, prevY;
+            if ($dragEl.attr('draggable-dragging') === 'true') {
+                mouseX = Math.round($dragEl.mouseX(e));
+                mouseY = Math.round($dragEl.mouseY(e));
+                prevX = $dragEl.attr('draggable-x');
+                prevY = $dragEl.attr('draggable-y');
+                if (prevX && prevY) {
+                    offsetX = data.horizontal ? mouseX - parseInt(prevX, 10) : 0;
+                    offsetY = data.vertical ? mouseY - parseInt(prevY, 10) : 0;
+                    gj.draggable.methods.move($dragEl[0], data, offsetX, offsetY, mouseX, mouseY);
                 } else {
-                    gj.draggable.events.start($dragEl, x, y);
+                    gj.draggable.events.start($dragEl, mouseX, mouseY);
                 }
-                $dragEl.attr('data-draggable-x', x);
-                $dragEl.attr('data-draggable-y', y);
+                $dragEl.attr('draggable-x', mouseX);
+                $dragEl.attr('draggable-y', mouseY);
             }
         }
     },
 
-    move: function ($dragEl, offsetX, offsetY) {
-        var target = $dragEl.get(0),
-            top = target.style.top ? parseInt(target.style.top) : $dragEl.position().top,
-            left = target.style.left ? parseInt(target.style.left) : $dragEl.position().left;
-        target.style.top = (top + offsetY) + 'px';
-        target.style.left = (left + offsetX) + 'px';
+    move: function (dragEl, data, offsetX, offsetY, mouseX, mouseY) {
+        var contPosition, maxTop, maxLeft,
+            position = gj.core.position(dragEl),
+            newTop = position.top + offsetY,
+            newLeft = position.left + offsetX;
+
+        if (data.containment) {
+            contPosition = gj.core.position(data.containment);
+            maxTop = contPosition.top + gj.core.height(data.containment) - gj.core.height(dragEl);
+            maxLeft = contPosition.left + gj.core.width(data.containment) - gj.core.width(dragEl);
+            if (newTop > contPosition.top && newTop < maxTop) {
+                if (contPosition.top >= mouseY || contPosition.bottom <= mouseY) {
+                    newTop = position.top;
+                }
+            } else {
+                if (newTop <= contPosition.top) {
+                    newTop = contPosition.top + 1;
+                } else {
+                    newTop = maxTop - 1;
+                }
+            }
+            if (newLeft > contPosition.left && newLeft < maxLeft) {
+                if (contPosition.left >= mouseX || contPosition.right <= mouseX) {
+                    newLeft = position.left;
+                }
+            } else {
+                if (newLeft <= contPosition.left) {
+                    newLeft = contPosition.left + 1;
+                } else {
+                    newLeft = maxLeft - 1;
+                }
+            }
+        }
+
+        if (false !== gj.draggable.events.drag($(dragEl), newTop, newLeft, mouseX, mouseY)) {
+            dragEl.style.top = newTop + 'px';
+            dragEl.style.left = newLeft + 'px';
+        }
     },
 
     destroy: function ($dragEl) {
@@ -1863,23 +1953,23 @@ gj.draggable.events = {
      *
      * @event drag
      * @param {object} e - event data
-     * @param {object} offset - Current offset position as { top, left } object.
-     * @param {object} mousePosition - Current mouse position as { top, left } object.
-     * @example sample <!-- draggable.base -->
+     * @param {object} newPosition - New position of the draggable element as { top, left } object.
+     * @param {object} mousePosition - Current mouse position as { x, y } object.
+     * @example sample <!-- draggable -->
      * <style>
      * .element { border: 1px solid #999; width: 300px; height: 200px; cursor: move; text-align: center; background-color: #DDD; }
      * </style>
      * <div id="element" class="element gj-unselectable">drag me</div>
      * <script>
      *     $('#element').draggable({
-     *         drag: function (e, offset, mousePosition) {
-     *             $('body').append('<div>The drag event is fired. offset { top:' + offset.top + ', left: ' + offset.left + '}.</div>');
+     *         drag: function (e, newPosition, mousePosition) {
+     *             $('body').append('<div>The drag event is fired. New Element Position = { top:' + offset.top + ', left: ' + offset.left + '}.</div>');
      *         }
      *     });
      * </script>
      */
-    drag: function ($dragEl, offsetX, offsetY, mouseX, mouseY) {
-        return $dragEl.triggerHandler('drag', [{ top: offsetY, left: offsetX }, { top: mouseY, left: mouseX }]);
+    drag: function ($dragEl, newTop, newLeft, mouseX, mouseY) {
+        return $dragEl.triggerHandler('drag', [{ top: newTop, left: newLeft }, { x: mouseX, y: mouseY }]);
     },
 
     /**
@@ -1887,7 +1977,8 @@ gj.draggable.events = {
      *
      * @event start
      * @param {object} e - event data
-     * @example sample <!-- draggable.base -->
+     * @param {object} mousePosition - Current mouse position as { x, y } object.
+     * @example sample <!-- draggable -->
      * <style>
      * .element { border: 1px solid #999; width: 300px; height: 200px; cursor: move; text-align: center; background-color: #DDD; }
      * </style>
@@ -1897,13 +1988,13 @@ gj.draggable.events = {
      * <script>
      *     $('#element').draggable({
      *         start: function (e, mousePosition) {
-     *             $('body').append('<div>The start event is fired. mousePosition { top:' + mousePosition.top + ', left: ' + mousePosition.left + '}.</div>');
+     *             $('body').append('<div>The start event is fired. mousePosition { x:' + mousePosition.x + ', y: ' + mousePosition.y + '}.</div>');
      *         }
      *     });
      * </script>
      */
     start: function ($dragEl, mouseX, mouseY) {
-        $dragEl.triggerHandler('start', [{ top: mouseY, left: mouseX }]);
+        $dragEl.triggerHandler('start', [{ x: mouseX, y: mouseY }]);
     },
 
     /**
@@ -1911,8 +2002,8 @@ gj.draggable.events = {
      *
      * @event stop
      * @param {object} e - event data
-     * @param {object} mousePosition - Current mouse position as { top, left } object.
-     * @example sample <!-- draggable.base -->
+     * @param {object} mousePosition - Current mouse position as { x, y } object.
+     * @example sample <!-- draggable -->
      * <style>
      * .element { border: 1px solid #999; width: 300px; height: 200px; cursor: move; text-align: center; background-color: #DDD; }
      * </style>
@@ -1940,7 +2031,7 @@ gj.draggable.widget = function ($element, jsConfig) {
         /** Remove draggable functionality from the element.
          * @method
          * @return jquery element
-         * @example sample <!-- draggable.base -->
+         * @example sample <!-- draggable -->
          * <style>
          * .element { border: 1px solid #999; width: 300px; height: 200px; cursor: move; text-align: center; background-color: #DDD; }
          * </style>
@@ -1996,7 +2087,7 @@ gj.droppable.config = {
     /** If specified, the class will be added to the droppable while draggable is being hovered over the droppable.
      * @type string
      * @default undefined
-     * @example sample <!-- droppable.base, draggable.base -->
+     * @example sample <!-- droppable, draggable -->
      * <style>
      * .draggable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
      * .droppable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
@@ -2037,8 +2128,8 @@ gj.droppable.methods = {
             if ($dropEl.isDragging) {
                 var hoverClass = $dropEl.data('hoverClass'),
                     mousePosition = {
-                        left: $dropEl.mouseX(e),
-                        top: $dropEl.mouseY(e)
+                        x: $dropEl.mouseX(e),
+                        y: $dropEl.mouseY(e)
                     },
                     newIsOver = gj.droppable.methods.isOver($dropEl, mousePosition);
                 if (newIsOver != $dropEl.isOver) {
@@ -2073,10 +2164,10 @@ gj.droppable.methods = {
     },
 
     isOver: function ($dropEl, mousePosition) {
-        var offsetTop = $dropEl.offset().top;// + parseInt($dropEl.css("border-top-width")) + parseInt($dropEl.css("margin-top")) + parseInt($dropEl.css("padding-top")),
-        offsetLeft = $dropEl.offset().left;// + parseInt($dropEl.css("border-left-width")) + parseInt($dropEl.css("margin-left")) + parseInt($dropEl.css("padding-left"));
-        return mousePosition.left > offsetLeft && mousePosition.left < (offsetLeft + $dropEl.outerWidth(true))
-            && mousePosition.top > offsetTop && mousePosition.top < (offsetTop + $dropEl.outerHeight(true));
+        var offsetTop = $dropEl.offset().top,
+            offsetLeft = $dropEl.offset().left;
+        return mousePosition.x > offsetLeft && mousePosition.x < (offsetLeft + $dropEl.outerWidth(true))
+            && mousePosition.y > offsetTop && mousePosition.y < (offsetTop + $dropEl.outerHeight(true));
     },
 
     destroy: function ($dropEl) {
@@ -2097,7 +2188,7 @@ gj.droppable.events = {
     /** Triggered when a draggable element is dropped.
      * @event drop
      * @param {object} e - event data
-     * @example sample <!-- droppable.base, draggable.base -->
+     * @example sample <!-- droppable, draggable -->
      * <style>
      * .draggable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
      * .droppable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
@@ -2118,7 +2209,7 @@ gj.droppable.events = {
      * @event over
      * @param {object} e - event data
      * @param {object} mousePosition - Current mouse position as { top, left } object.
-     * @example sample <!-- droppable.base, draggable.base -->
+     * @example sample <!-- droppable, draggable -->
      * <style>
      * .draggable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
      * .droppable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
@@ -2145,7 +2236,7 @@ gj.droppable.events = {
     /** Triggered when a draggable element is dragged out of the droppable.
      * @event out
      * @param {object} e - event data
-     * @example sample <!-- droppable.base, draggable.base -->
+     * @example sample <!-- droppable, draggable -->
      * <style>
      * .draggable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
      * .droppable { border: 1px solid #999; width: 300px; height: 200px; text-align: center; }
@@ -2176,7 +2267,7 @@ gj.droppable.widget = function ($element, jsConfig) {
     /** Removes the droppable functionality.
      * @method
      * @return jquery element
-     * @example sample <!-- draggable.base, droppable.base -->
+     * @example sample <!-- draggable, droppable -->
      * <button onclick="create()" class="gj-button-md">Create</button>
      * <button onclick="dropEl.destroy()" class="gj-button-md">Destroy</button>
      * <br/><br/>
@@ -7992,7 +8083,7 @@ gj.grid.plugins.resizableColumns = {
             /** If set to true, users can resize columns by dragging the edges (resize handles) of their header cells.
              * @type boolean
              * @default false
-             * @example Material.Design <!-- grid, draggable.base -->
+             * @example Material.Design <!-- grid, draggable -->
              * <table id="grid"></table>
              * <script>
              *     var grid = $('#grid').grid({
@@ -8001,7 +8092,7 @@ gj.grid.plugins.resizableColumns = {
              *         columns: [ { field: 'ID', width: 56 }, { field: 'Name', sortable: true }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Bootstrap <!-- bootstrap, grid, draggable.base -->
+             * @example Bootstrap <!-- bootstrap, grid, draggable -->
              * <table id="grid"></table>
              * <script>
              *     var grid = $('#grid').grid({
@@ -8011,7 +8102,7 @@ gj.grid.plugins.resizableColumns = {
              *         columns: [ { field: 'ID', width: 34 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Bootstrap.4 <!-- bootstrap4, grid, draggable.base -->
+             * @example Bootstrap.4 <!-- bootstrap4, grid, draggable -->
              * <table id="grid"></table>
              * <script>
              *     var grid = $('#grid').grid({
@@ -8021,7 +8112,7 @@ gj.grid.plugins.resizableColumns = {
              *         columns: [ { field: 'ID', width: 42 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Bootstrap.4.FixedHeader <!-- bootstrap4, grid, draggable.base -->
+             * @example Bootstrap.4.FixedHeader <!-- bootstrap4, grid, draggable -->
              * <table id="grid" width="900"></table>
              * <script>
              *     var grid = $('#grid').grid({
@@ -8074,12 +8165,15 @@ gj.grid.plugins.resizableColumns = {
 
         createResizeHandle: function ($grid, $column, column) {
             var data = $grid.data();
-            return function (e, offset) {
-                var i, index, rows, cell, newWidth, nextWidth, currentWidth = parseInt($column.attr('width'), 10);
+            return function (e, newPosition) {
+                var i, index, rows, cell, newWidth, nextWidth,
+                    currentWidth = parseInt($column.attr('width'), 10),
+                    position = gj.core.position(this),
+                    offset = { top: newPosition.top - position.top, left: newPosition.left - position.left };
                 if (!currentWidth) {
                     currentWidth = $column.outerWidth();
                 }
-                if (offset && offset.left) {
+                if (offset.left) {
                     newWidth = currentWidth + offset.left;
                     column.width = newWidth;
                     $column.attr('width', newWidth);
@@ -8123,7 +8217,7 @@ gj.grid.plugins.rowReorder = {
             /** If set to true, enable row reordering with drag and drop.
              * @type boolean
              * @default false
-             * @example Material.Design <!-- grid, grid.rowReorder, draggable.base, droppable.base -->
+             * @example Material.Design <!-- grid, grid.rowReorder, draggable, droppable -->
              * <p>Drag and Drop rows in order to reorder them.</p>
              * <table id="grid"></table>
              * <script>
@@ -8133,7 +8227,7 @@ gj.grid.plugins.rowReorder = {
              *         columns: [ { field: 'ID', width: 56 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Bootstrap.3 <!-- bootstrap, grid, grid.rowReorder, draggable.base, droppable.base -->
+             * @example Bootstrap.3 <!-- bootstrap, grid, grid.rowReorder, draggable, droppable -->
              * <p>Drag and Drop rows in order to reorder them.</p>
              * <table id="grid"></table>
              * <script>
@@ -8144,7 +8238,7 @@ gj.grid.plugins.rowReorder = {
              *         columns: [ { field: 'ID', width: 36 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Bootstrap.4 <!-- bootstrap4, grid, grid.rowReorder, draggable.base, droppable.base -->
+             * @example Bootstrap.4 <!-- bootstrap4, grid, grid.rowReorder, draggable, droppable -->
              * <p>Drag and Drop rows in order to reorder them.</p>
              * <table id="grid"></table>
              * <script>
@@ -8152,7 +8246,7 @@ gj.grid.plugins.rowReorder = {
              *         dataSource: '/Players/Get',
              *         rowReorder: true,
              *         uiLibrary: 'bootstrap4',
-             *         columns: [ { field: 'ID', width: 36 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
+             *         columns: [ { field: 'ID', width: 42 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
              */
@@ -8162,7 +8256,7 @@ gj.grid.plugins.rowReorder = {
              * Accept only field names of columns.
              * @type string
              * @default undefined
-             * @example sample <!-- grid, grid.rowReorder, draggable.base, droppable.base -->
+             * @example sample <!-- grid, grid.rowReorder, draggable, droppable -->
              * <table id="grid"></table>
              * <script>
              *     $('#grid').grid({
@@ -8178,7 +8272,7 @@ gj.grid.plugins.rowReorder = {
             /** If set, update the value in the field for all records. Accept only field names of columns.
              * @type string
              * @default undefined
-             * @example Visible.OrderNumber <!-- grid, grid.rowReorder, draggable.base, droppable.base -->
+             * @example Visible.OrderNumber <!-- grid, grid.rowReorder, draggable, droppable -->
              * <table id="grid"></table>
              * <script>
              *     var data = [
@@ -8193,7 +8287,7 @@ gj.grid.plugins.rowReorder = {
              *         columns: [ { field: 'ID', width: 56 }, { field: 'OrderNumber', width:120 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Hidden.OrderNumber <!-- grid, grid.rowReorder, draggable.base, droppable.base -->
+             * @example Hidden.OrderNumber <!-- grid, grid.rowReorder, draggable, droppable -->
              * <button onclick="alert(JSON.stringify(grid.getAll()))" class="gj-button-md">Show Data</button><br/><br/>
              * <table id="grid"></table>
              * <script>
@@ -8481,7 +8575,7 @@ gj.grid.plugins.columnReorder = {
             /** If set to true, enable column reordering with drag and drop.
              * @type boolean
              * @default false
-             * @example Material.Design <!-- grid, draggable.base, droppable.base -->
+             * @example Material.Design <!-- grid, draggable, droppable -->
              * <p>Drag and Drop column headers in order to reorder the columns.</p>
              * <table id="grid"></table>
              * <script>
@@ -8491,7 +8585,7 @@ gj.grid.plugins.columnReorder = {
              *         columns: [ { field: 'ID', width: 56 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Bootstrap <!-- bootstrap, grid, draggable.base, droppable.base -->
+             * @example Bootstrap <!-- bootstrap, grid, draggable, droppable -->
              * <p>Drag and Drop column headers in order to reorder the columns.</p>
              * <table id="grid"></table>
              * <script>
@@ -8502,7 +8596,7 @@ gj.grid.plugins.columnReorder = {
              *         columns: [ { field: 'ID', width: 36 }, { field: 'Name' }, { field: 'PlaceOfBirth' } ]
              *     });
              * </script>
-             * @example Bootstrap.4 <!-- bootstrap4, grid, draggable.base, droppable.base -->
+             * @example Bootstrap.4 <!-- bootstrap4, grid, draggable, droppable -->
              * <p>Drag and Drop column headers in order to reorder the columns.</p>
              * <table id="grid"></table>
              * <script>
@@ -11533,7 +11627,7 @@ gj.tree.plugins.dragAndDrop = {
 			/** Enables drag and drop functionality for each node.
               * @type Boolean
               * @default undefined
-              * @example Material.Design <!-- draggable.base, droppable.base, tree -->
+              * @example Material.Design <!-- draggable, droppable, tree -->
               * <h3>Drag and Drop Tree Nodes</h3>
               * <div id="tree"></div>
               * <script>
@@ -11542,7 +11636,7 @@ gj.tree.plugins.dragAndDrop = {
               *         dragAndDrop: true
               *     });
               * </script>
-              * @example Bootstrap.3 <!-- bootstrap, draggable.base, droppable.base, tree -->
+              * @example Bootstrap.3 <!-- bootstrap, draggable, droppable, tree -->
               * <div class="container">
               *     <h3>Drag and Drop Tree Nodes</h3>
               *     <div id="tree"></div>
@@ -11554,7 +11648,7 @@ gj.tree.plugins.dragAndDrop = {
               *         uiLibrary: 'bootstrap'
               *     });
               * </script>
-              * @example Bootstrap.4 <!-- bootstrap4, draggable.base, droppable.base, tree -->
+              * @example Bootstrap.4 <!-- bootstrap4, draggable, droppable, tree -->
               * <div class="container">
               *     <h3>Drag and Drop Tree Nodes</h3>
               *     <div id="tree"></div>
@@ -11697,7 +11791,7 @@ gj.tree.plugins.dragAndDrop = {
                         $indicator, middle;
 	                if (!success && $wrapper.droppable('isOver', mousePosition)) {
 	                    middle = $wrapper.position().top + ($wrapper.outerHeight() / 2);
-	                    if (mousePosition.top < middle) {
+	                    if (mousePosition.y < middle) {
 	                        $wrapper.addClass(data.style.dropAbove).removeClass(data.style.dropBelow);
 	                    } else {
 	                        $wrapper.addClass(data.style.dropBelow).removeClass(data.style.dropAbove);
@@ -11805,7 +11899,7 @@ gj.tree.plugins.dragAndDrop = {
          * @param {string} id - the id of the record
          * @param {object} parentId - the id of the new parend node
          * @param {object} orderNumber - the new order number
-         * @example Event.Sample <!-- draggable.base, droppable.base, tree -->
+         * @example Event.Sample <!-- draggable, droppable, tree -->
          * <div id="tree" data-source="/Locations/Get" data-drag-and-drop="true"></div>
          * <script>
          *     var tree = $('#tree').tree();
@@ -12460,6 +12554,9 @@ gj.editor.methods = {
         if ($body.length === 0) {
             $body = $('<div role="body"></div>');
             $(wrapper).append($body);
+            if ($editor[0].innerText) {
+                $body[0].innerHTML = $editor[0].innerText;
+            }
         }
         $body.attr('contenteditable', true);
         $body.on('keydown', function (e) {
@@ -13924,7 +14021,7 @@ gj.datepicker.config = {
         /** If set to true, the datepicker will have modal behavior.
          * @type Boolean
          * @default false
-         * @example True <!-- datepicker -->
+         * @example Material.Design <!-- datepicker -->
          * <input id="datepicker" width="312" />
          * <script>
          *    $('#datepicker').datepicker({ modal: true });
@@ -13964,7 +14061,7 @@ gj.datepicker.config = {
          * @example True <!-- datepicker -->
          * <input id="datepicker" width="312" />
          * <script>
-         *    $('#datepicker').datepicker({ footer: true, modal: true, header: true, showOtherMonths: true });
+         *    $('#datepicker').datepicker({ footer: true, modal: true, header: true });
          * </script>
          * @example False <!-- datepicker -->
          * <input id="datepicker" width="312" />
@@ -15938,7 +16035,9 @@ gj.datetimepicker.config = {
          * @example Sample <!-- datetimepicker -->
          * <input id="datetimepicker" width="312" />
          * <script>
-         *    $('#datetimepicker').datetimepicker({ datepicker: { showOtherMonths: true, calendarWeeks: true } });
+         *    $('#datetimepicker').datetimepicker({
+         *        datepicker: { showOtherMonths: true, calendarWeeks: true }
+         *    });
          * </script>
          */
         datepicker: gj.datepicker.config.base,
@@ -15989,8 +16088,7 @@ gj.datetimepicker.config = {
         value: undefined,
 
         /** Specifies the format, which is used to format the value of the DatePicker displayed in the input.
-         * @additionalinfo 
-         * <b>M</b> - Minutes; no leading zero for single-digit minutes.<br/>
+         * @additionalinfo <b>M</b> - Minutes; no leading zero for single-digit minutes.<br/>
          * <b>MM</b> - Minutes; leading zero for single-digit minutes.<br/>
          * <b>H</b> - The hour, using a 24-hour clock from 0 to 23; no leading zero for single-digit hours.<br/>
          * <b>HH</b> - The hour, using a 24-hour clock from 0 to 23; leading zero for single-digit hours.<br/>
@@ -16022,6 +16120,101 @@ gj.datetimepicker.config = {
          * </script>
          */
         format: 'HH:MM mm/dd/yyyy',
+
+        /** The width of the datetimepicker.
+         * @type number
+         * @default undefined
+         * @example JS.Config <!-- datetimepicker -->
+         * <input id="input" />
+         * <script>
+         *    $('#input').datetimepicker({ width: 312 });
+         * </script>
+         * @example HTML.Config <!-- datetimepicker -->
+         * <input id="input" width="312" />
+         * <script>
+         *    $('#input').datetimepicker();
+         * </script>
+         */
+        width: undefined,
+
+        /** If set to true, the datetimepicker will have modal behavior.
+         * @type Boolean
+         * @default false
+         * @example Material.Design <!-- datetimepicker -->
+         * <input id="input" width="312" />
+         * <script>
+         *    $('#input').datetimepicker({ modal: true });
+         * </script>
+         * @example Bootstrap <!-- bootstrap, datetimepicker -->
+         * <input id="input" width="220" />
+         * <script>
+         *    $('#input').datetimepicker({ uiLibrary: 'bootstrap', modal: true, footer: true });
+         * </script>
+         * @example Bootstrap.4 <!-- bootstrap4, datetimepicker -->
+         * <input id="input" width="234" />
+         * <script>
+         *    $('#input').datetimepicker({ uiLibrary: 'bootstrap4', modal: true, footer: true });
+         * </script>
+         */
+        modal: false,
+
+        /** If set to true, add footer with ok and cancel buttons to the datetimepicker.
+         * @type Boolean
+         * @default false
+         * @example True <!-- datetimepicker -->
+         * <input id="input" width="312" />
+         * <script>
+         *    $('#input').datetimepicker({ footer: true, modal: true, header: true });
+         * </script>
+         * @example False <!-- datetimepicker -->
+         * <input id="input" width="312" />
+         * <script>
+         *    $('#input').datetimepicker({ footer: false });
+         * </script>
+         */
+        footer: false,
+
+        /** The size of the datetimepicker input.
+         * @type 'small'|'default'|'large'
+         * @default 'default'
+         * @example Bootstrap.4 <!-- bootstrap4, datetimepicker -->
+         * <p><label for="small">Small Size:</label> <input id="small" width="234" value="10:20 03/20/2018" /></p>
+         * <p><label for="default">Default Size:</label> <input id="default" width="234" value="10:20 03/20/2018" /></p>
+         * <p><label for="large">Large Size:</label> <input id="large" width="234" value="10:20 03/20/2018" /></p>
+         * <script>
+         *     $('#small').datetimepicker({ uiLibrary: 'bootstrap4', size: 'small' });
+         *     $('#default').datetimepicker({ uiLibrary: 'bootstrap4', size: 'default' });
+         *     $('#large').datetimepicker({ uiLibrary: 'bootstrap4', size: 'large' });
+         * </script>
+         * @example Bootstrap.4.Font.Awesome <!-- bootstrap4, fontawesome, datetimepicker -->
+         * <p><label for="small">Small Size:</label> <input id="small" width="234" value="10:20 03/20/2018" /></p>
+         * <p><label for="default">Default Size:</label> <input id="default" width="234" value="10:20 03/20/2018" /></p>
+         * <p><label for="large">Large Size:</label> <input id="large" width="234" value="10:20 03/20/2018" /></p>
+         * <script>
+         *     $('#small').datetimepicker({ uiLibrary: 'bootstrap4', iconsLibrary: 'fontawesome', size: 'small' });
+         *     $('#default').datetimepicker({ uiLibrary: 'bootstrap4', iconsLibrary: 'fontawesome', size: 'default' });
+         *     $('#large').datetimepicker({ uiLibrary: 'bootstrap4', iconsLibrary: 'fontawesome', size: 'large' });
+         * </script>
+         * @example Bootstrap.3 <!-- bootstrap, datetimepicker -->
+         * <p><label for="small">Small Size:</label> <input id="small" width="220" value="10:20 03/20/2018" /></p>
+         * <p><label for="default">Default Size:</label> <input id="default" width="220" value="10:20 03/20/2018" /></p>
+         * <p><label for="large">Large Size:</label> <input id="large" width="220" value="10:20 03/20/2018" /></p>
+         * <script>
+         *     $('#small').datetimepicker({ uiLibrary: 'bootstrap', size: 'small' });
+         *     $('#default').datetimepicker({ uiLibrary: 'bootstrap', size: 'default' });
+         *     $('#large').datetimepicker({ uiLibrary: 'bootstrap', size: 'large' });
+         * </script>
+         * @example Material.Design <!-- datetimepicker -->
+         * <p><label for="small">Small Size:</label> <input id="small" width="276" value="10:20 03/20/2018" /></p>
+         * <p><label for="default">Default Size:</label> <input id="default" width="276" value="10:20 03/20/2018" /></p>
+         * <p><label for="large">Large Size:</label> <input id="large" width="276" value="10:20 03/20/2018" /></p>
+         * <script>
+         *     $('#small').datetimepicker({ size: 'small' });
+         *     $('#default').datetimepicker({ size: 'default' });
+         *     $('#large').datetimepicker({ size: 'large' });
+         * </script>
+         */
+        size: 'default',
         
         /** The language that needs to be in use.
          * @type string
@@ -16112,6 +16305,7 @@ gj.datetimepicker.methods = {
         data.datepicker.footer = data.footer;
         data.datepicker.style.calendar = data.style.calendar;
         data.datepicker.value = data.value;
+        data.datepicker.size = data.size;
         data.datepicker.autoClose = false;
         gj.datepicker.methods.initialize($datetimepicker, data.datepicker);
         $datetimepicker.on('select', function (e, type) {
@@ -16347,6 +16541,402 @@ gj.datetimepicker.widget.prototype.getConfig = gj.datetimepicker.methods.getConf
                 return new gj.datetimepicker.widget(this, method);
             } else {
                 $widget = new gj.datetimepicker.widget(this, null);
+                if ($widget[method]) {
+                    return $widget[method].apply(this, Array.prototype.slice.call(arguments, 1));
+                } else {
+                    throw 'Method ' + method + ' does not exist.';
+                }
+            }
+        }
+    };
+})(jQuery);
+/* global window alert jQuery gj */
+/**
+  * @widget Slider
+  * @plugin Base
+  */
+gj.slider = {
+    plugins: {},
+    messages: {
+        'en-us': {
+        }
+    }
+};
+
+gj.slider.config = {
+    base: {
+
+        /** The minimum value of the Slider.
+         * @type number
+         * @default 0
+         * @example JS.Config <!-- slider -->
+         * <input id="slider" width="300" />
+         * Value: <span id="value"></span>
+         * <script>
+         *    $('#slider').slider({
+         *        min: 5,
+         *        max: 15,
+         *        slide: function (e, value) {
+         *            document.getElementById('value').innerText = value;
+         *        }
+         *    });
+         * </script>
+         */
+        min: 0,
+
+        /** The maximum value of the Slider.
+         * @type number
+         * @default 10
+         * @example JS.Config <!-- slider -->
+         * <input id="slider" width="300" />
+         * Value: <span id="value"></span>
+         * <script>
+         *    $('#slider').slider({
+         *        max: 20,
+         *        slide: function (e, value) {
+         *            document.getElementById('value').innerText = value;
+         *        }
+         *    });
+         * </script>
+         */
+        max: 100,
+
+        /** The orientation of a Slider: "horizontal" or "vertical".
+         * @type (horizontal|vertical)
+         * @default horizontal
+         */
+        // TODO orientation
+
+        /** The name of the UI library that is going to be in use.
+         * @additionalinfo The css file for bootstrap should be manually included if you use bootstrap.
+         * @type (materialdesign|bootstrap|bootstrap4)
+         * @default materialdesign
+         * @example MaterialDesign <!-- slider -->
+         * <input id="slider" width="300" />
+         * Value: <span id="value"></span>
+         * <script>
+         *    $('#slider').slider({
+         *        uiLibrary: 'materialdesign',
+         *        slide: function (e, value) {
+         *            document.getElementById('value').innerText = value;
+         *        }
+         *    });
+         * </script>
+         * @example Bootstrap.3 <!-- bootstrap, slider -->
+         * <input id="slider" width="300" />
+         * Value: <span id="value"></span>
+         * <script>
+         *    $('#slider').slider({
+         *        uiLibrary: 'bootstrap',
+         *        slide: function (e, value) {
+         *            document.getElementById('value').innerText = value;
+         *        }
+         *    });
+         * </script>
+         * @example Bootstrap.4 <!-- bootstrap4, slider -->
+         * <input id="slider" width="300" />
+         * Value: <span id="value"></span>
+         * <script>
+         *    $('#slider').slider({
+         *        uiLibrary: 'bootstrap4',
+         *        slide: function (e, value) {
+         *            document.getElementById('value').innerText = value;
+         *        }
+         *    });
+         * </script>
+         */
+        uiLibrary: 'materialdesign',
+
+        /** The initial slider value.
+         * @type number
+         * @default undefined
+         * @example Javascript <!-- slider -->
+         * <input id="slider" width="300" />
+         * Value: <span id="value"></span>
+         * <script>
+         *    $('#slider').slider({
+         *        value: 30,
+         *        slide: function (e, value) {
+         *            document.getElementById('value').innerText = value;
+         *        }
+         *    });
+         * </script>
+         * @example HTML <!-- slider -->
+         * <input id="slider" width="300" value="44" />
+         * Value: <span id="value"></span>
+         * <script>
+         *    $('#slider').slider({
+         *        slide: function (e, value) {
+         *            document.getElementById('value').innerText = value;
+         *        }
+         *    });
+         * </script>
+         */
+        value: undefined,
+
+        icons: {},
+
+        style: {
+            wrapper: 'gj-slider gj-slider-md',
+            progress: undefined,
+            track: undefined
+        }
+    },
+
+    bootstrap: {
+        style: {
+            wrapper: 'gj-slider gj-slider-bootstrap gj-slider-bootstrap-3',
+            progress: 'progress-bar',
+            track: 'progress'
+        }
+    },
+
+    bootstrap4: {
+        style: {
+            wrapper: 'gj-slider gj-slider-bootstrap gj-slider-bootstrap-4',
+            progress: 'progress-bar',
+            track: 'progress'
+        }
+    }
+};
+
+gj.slider.methods = {
+    init: function (jsConfig) {
+        gj.widget.prototype.init.call(this, jsConfig, 'slider');
+        this.attr('data-slider', 'true');
+        gj.slider.methods.initialize(this, this.data());
+        return this;
+    },
+
+    initialize: function ($slider, data) {
+        var wrapper, track, handle, progress;
+
+        $slider[0].style.display = 'none';
+
+        if ($slider[0].parentElement.attributes.role !== 'wrapper') {
+            wrapper = document.createElement('div');
+            wrapper.setAttribute('role', 'wrapper');
+            $slider[0].parentNode.insertBefore(wrapper, $slider[0]);
+            wrapper.appendChild($slider[0]);
+        } else {
+            wrapper = $slider[0].parentElement;
+        }
+
+        if (data.width) {
+            wrapper.style.width = data.width + 'px';
+        }
+        
+        gj.core.addClasses(wrapper, data.style.wrapper);
+
+        track = $slider[0].querySelector('[role="track"]');
+        if (track == null) {
+            track = document.createElement('div');
+            track.setAttribute('role', 'track');
+            wrapper.appendChild(track);
+        }
+        gj.core.addClasses(track, data.style.track);
+
+        handle = $slider[0].querySelector('[role="handle"]');
+        if (handle == null) {
+            handle = document.createElement('div');
+            handle.setAttribute('role', 'handle');
+            wrapper.appendChild(handle);
+        }
+
+        progress = $slider[0].querySelector('[role="progress"]');
+        if (progress == null) {
+            progress = document.createElement('div');
+            progress.setAttribute('role', 'progress');
+            wrapper.appendChild(progress);
+        }
+        gj.core.addClasses(progress, data.style.progress);
+
+        if (!data.value) {
+            data.value = data.min;
+        }
+        gj.slider.methods.value($slider, data, data.value);
+        
+        gj.documentManager.subscribeForEvent('mouseup', $slider.data('guid'), gj.slider.methods.createMouseUpHandler($slider, handle, data));
+        handle.addEventListener('mousedown', gj.slider.methods.createMouseDownHandler(handle, data));
+        gj.documentManager.subscribeForEvent('mousemove', $slider.data('guid'), gj.slider.methods.createMouseMoveHandler($slider, track, handle, progress, data));
+        
+    },
+
+    createMouseUpHandler: function ($slider, handle, data) {
+        return function (e) {
+            if (handle.getAttribute('drag') === 'true') {
+                handle.setAttribute('drag', 'false');
+                gj.slider.events.change($slider);
+            }
+        }
+    },
+
+    createMouseDownHandler: function (handle, data) {
+        return function (e) {
+            handle.setAttribute('drag', 'true');
+        }
+    },
+
+    createMouseMoveHandler: function ($slider, track, handle, progress, data) {
+        return function (e) {
+            var sliderPos, x, trackWidth, offset, stepSize, valuePos, newValue;
+            if (handle.getAttribute('drag') === 'true') {
+                sliderPos = gj.core.position($slider[0], true, true);
+                x = new gj.widget().mouseX(e) - sliderPos.left;
+
+                trackWidth = gj.core.width(track);
+                offset = gj.core.width(handle) / 2;
+                stepSize = trackWidth / (data.max - data.min);
+                valuePos = (data.value - data.min) * stepSize;
+
+                if (x >= offset && x <= (trackWidth + offset)) {
+                    if (x > valuePos + (stepSize / 2) || x < valuePos - (stepSize / 2)) {
+                        newValue = Math.round((x - offset) / stepSize) + data.min;
+                        gj.slider.methods.value($slider, data, newValue);
+                    }
+                }
+            }
+        }
+    },
+
+    value: function ($slider, data, value) {
+        var stepSize, track, handle, progress;
+        if (typeof (value) === "undefined") {
+            return $slider[0].value;
+        } else {
+            $slider[0].setAttribute('value', value);
+            data.value = value;
+            track = $slider.parent().children('[role="track"]')[0]
+            stepSize = gj.core.width(track) / (data.max - data.min);
+            handle = $slider.parent().children('[role="handle"]')[0];
+            handle.style.left = ((value - data.min) * stepSize) + 'px';
+            progress = $slider.parent().children('[role="progress"]')[0];
+            progress.style.width = ((value - data.min) * stepSize) + 'px';
+            gj.slider.events.slide($slider, value);
+            return $slider;
+        }
+    },
+
+    destroy: function ($slider) {
+        var data = $slider.data(),
+            $wrapper = $slider.parent();
+        if (data) {
+            $wrapper.children('[role="track"]').remove();
+            $wrapper.children('[role="handle"]').remove();
+            $wrapper.children('[role="progress"]').remove();
+            $slider.unwrap();
+            $slider.off();
+            $slider.removeData();
+            $slider.removeAttr('data-type').removeAttr('data-guid').removeAttr('data-slider');
+            $slider.removeClass();
+            $slider.show();
+        }
+        return $slider;
+    }
+};
+
+gj.slider.events = {
+    /**
+     * Fires when the slider value changes as a result of selecting a new value with the drag handle, buttons or keyboard.
+     *
+     * @event change
+     * @param {object} e - event data
+     * @example sample <!-- slider -->
+     * <input id="slider" width="300" />
+     * <script>
+     *     var slider = $('#slider').slider({
+     *         change: function (e) {
+     *             alert('Change is fired. The new value is ' + slider.value());
+     *         }
+     *     });
+     * </script>
+     */
+    change: function ($slider) {
+        return $slider.triggerHandler('change');
+    },
+
+    /**
+     * Fires when the user drags the drag handle to a new position.
+     * @event slide
+     * @param {object} e - event data
+     * @param {object} value - The value of the slider.
+     * @example sample <!-- slider -->
+     * <input id="slider" width="300" />
+     * Value: <span id="value"></span>
+     * <script>
+     *    $('#slider').slider({
+     *        value: 30,
+     *        slide: function (e, value) {
+     *            document.getElementById('value').innerText = value;
+     *        }
+     *    });
+     * </script>
+     */
+    slide: function ($slider, value) {
+        return $slider.triggerHandler('slide', [value]);
+    }
+};
+
+gj.slider.widget = function ($element, jsConfig) {
+    var self = this,
+        methods = gj.slider.methods;
+
+    /** Gets or sets the value of the slider.
+     * @method
+     * @param {string} value - The value that needs to be selected.
+     * @return string
+     * @example Get <!-- slider -->
+     * <button class="gj-button-md" onclick="alert($slider.value())">Get Value</button>
+     * <hr/>
+     * <input id="slider" width="300" />
+     * <script>
+     *     var $slider = $('#slider').slider();
+     * </script>
+     * @example Set <!-- slider -->
+     * <button class="gj-button-md" onclick="$slider.value(77)">Set Value</button>
+     * <hr/>
+     * <input id="slider" width="300"  />
+     * <script>
+     *     var $slider = $('#slider').slider();
+     * </script>
+     */
+    self.value = function (value) {
+        return methods.value(this, this.data(), value);
+    };
+
+    /** Remove slider functionality from the element.
+     * @method
+     * @return jquery element
+     * @example sample <!-- slider -->
+     * <button class="gj-button-md" onclick="slider.destroy()">Destroy</button>
+     * <input id="slider" width="300" />
+     * <script>
+     *     var slider = $('#slider').slider();
+     * </script>
+     */
+    self.destroy = function () {
+        return methods.destroy(this);
+    };
+
+    $.extend($element, self);
+    if ('true' !== $element.attr('data-slider')) {
+        methods.init.call($element, jsConfig);
+    }
+
+    return $element;
+};
+
+gj.slider.widget.prototype = new gj.widget();
+gj.slider.widget.constructor = gj.slider.widget;
+
+(function ($) {
+    $.fn.slider = function (method) {
+        var $widget;
+        if (this && this.length) {
+            if (typeof method === 'object' || !method) {
+                return new gj.slider.widget(this, method);
+            } else {
+                $widget = new gj.slider.widget(this, null);
                 if ($widget[method]) {
                     return $widget[method].apply(this, Array.prototype.slice.call(arguments, 1));
                 } else {

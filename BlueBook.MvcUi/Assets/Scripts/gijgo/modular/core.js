@@ -1,5 +1,5 @@
 /*
- * Gijgo JavaScript Library v1.9.4
+ * Gijgo JavaScript Library v1.9.6
  * http://gijgo.com/
  *
  * Copyright 2014, 2018 gijgo.com
@@ -457,6 +457,40 @@ gj.documentManager = {
         }
 
         return result;
+    },
+
+    addClasses: function (el, classes) {
+        var i, arr;
+        if (classes) {
+            arr = classes.split(' ');
+            for (i = 0; i < arr.length; i++) {
+                el.classList.add(arr[i]);
+            }
+        }
+    },
+
+    position: function (elem, padding, margin) {
+        var box = elem.getBoundingClientRect(),
+            body = document.body,
+            bodyStyle = window.getComputedStyle(body),
+            docEl = document.documentElement,
+            scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop,
+            scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft,
+            clientTop = docEl.clientTop || body.clientTop || 0,
+            clientLeft = docEl.clientLeft || body.clientLeft || 0,
+            top = Math.round(box.top + scrollTop - clientTop),
+            left = Math.round(box.left + scrollLeft - clientLeft);
+
+        if (padding) {
+            top += parseInt(bodyStyle.paddingTop || 0, 10);
+            left += parseInt(bodyStyle.paddingLeft || 0, 10);
+        }
+        if (margin) {
+            top += parseInt(bodyStyle.marginTop || 0, 10);
+            left += parseInt(bodyStyle.marginLeft || 0, 10);
+        }
+
+        return { top: top, left: left, bottom: top + gj.core.height(elem), right: left + gj.core.width(elem) };
     }
 };
 gj.core.messages['bg-bg'] = {

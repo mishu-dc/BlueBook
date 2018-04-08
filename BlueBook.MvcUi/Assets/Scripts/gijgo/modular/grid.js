@@ -1,5 +1,5 @@
 /*
- * Gijgo Grid v1.9.4
+ * Gijgo Grid v1.9.6
  * http://gijgo.com/grid
  *
  * Copyright 2014, 2018 gijgo.com
@@ -2829,12 +2829,15 @@ gj.grid.plugins.inlineEditing.configure = function ($grid, fullConfig, clientCon
 
         createResizeHandle: function ($grid, $column, column) {
             var data = $grid.data();
-            return function (e, offset) {
-                var i, index, rows, cell, newWidth, nextWidth, currentWidth = parseInt($column.attr('width'), 10);
+            return function (e, newPosition) {
+                var i, index, rows, cell, newWidth, nextWidth,
+                    currentWidth = parseInt($column.attr('width'), 10),
+                    position = gj.core.position(this),
+                    offset = { top: newPosition.top - position.top, left: newPosition.left - position.left };
                 if (!currentWidth) {
                     currentWidth = $column.outerWidth();
                 }
-                if (offset && offset.left) {
+                if (offset.left) {
                     newWidth = currentWidth + offset.left;
                     column.width = newWidth;
                     $column.attr('width', newWidth);

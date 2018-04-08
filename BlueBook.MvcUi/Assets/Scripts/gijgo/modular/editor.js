@@ -1,5 +1,5 @@
 /*
- * Gijgo Editor v1.9.4
+ * Gijgo Editor v1.9.6
  * http://gijgo.com/editor
  *
  * Copyright 2014, 2018 gijgo.com
@@ -128,6 +128,9 @@ gj.editor.methods = {
         if ($body.length === 0) {
             $body = $('<div role="body"></div>');
             $(wrapper).append($body);
+            if ($editor[0].innerText) {
+                $body[0].innerHTML = $editor[0].innerText;
+            }
         }
         $body.attr('contenteditable', true);
         $body.on('keydown', function (e) {
