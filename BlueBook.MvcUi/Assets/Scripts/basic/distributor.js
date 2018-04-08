@@ -52,7 +52,7 @@ $(document).ready(function () {
             { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Edit', events: { 'click': Edit } },
             { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
         ],
-        pager: { limit: 5, sizes: [2, 5, 10, 20] }
+        pager: { limit: 10, sizes: [5, 10, 20, 50] }
     });
 
     dialog = $('#dialog').dialog({
