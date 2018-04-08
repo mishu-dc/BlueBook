@@ -214,6 +214,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\DistributorModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -231,6 +232,7 @@
     <Content Include="Assets\Css\bootstrap\bootstrap-theme.min.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\Scripts\basic\brand.js" />
     <Content Include="Assets\Scripts\basic\distributor.js" />
     <Content Include="Assets\Css\gijgo\combined\demo.css" />
     <Content Include="Assets\Css\gijgo\combined\demo.min.css" />
