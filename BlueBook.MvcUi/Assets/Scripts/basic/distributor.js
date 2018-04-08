@@ -67,8 +67,10 @@ $(document).ready(function () {
         $('#Code').val('');
         $('#Name').val('');
         $('#Address').val('');
+        $('#Code').focus();
         dialog.open('Add Distributor');
     });
+
     $('#btnSave').on('click', Save);
 
     $('#btnCancel').on('click', function () {
