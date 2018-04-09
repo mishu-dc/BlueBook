@@ -9,5 +9,7 @@ namespace BlueBook.Entity.Repositories.Interfaces
 {
     public interface IProductRepository:IRepository<Product>
     {
+        Task<List<Product>> GetProductsByPageAsync(int? page, int? limit, string sortBy, string direction, string code, string name, int? brandId);
+        Task<int> GetTotalProductsAsync(int? page, int? limit, string sortBy, string direction, string code, string name, int? brandId);
     }
 }
