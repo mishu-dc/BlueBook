@@ -61,7 +61,7 @@ namespace BlueBook.Entity.Repositories.Implementations
             }
             else
             {
-                query = query.OrderBy(q => q.Code);
+                query = query.OrderBy(q => q.Name);
             }
 
             return query;
