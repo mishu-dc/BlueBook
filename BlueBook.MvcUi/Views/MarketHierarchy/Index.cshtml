@@ -1,8 +1,53 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Market Hierarchy";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+@section scripts {
+    <script type="text/javascript" src="~/Assets/Scripts/basic/mh.js"></script>
+}
+
+<h2>Distributors</h2>
+
+<div class="container-full">
+    <div class="row">
+        <div class="col-xs-1">
+            <button id="btnAdd" type="button" class="btn btn-default pull-right">Add</button>
+        </div>
+        <div class="col-xs-1">
+            <button id="btnEdit" type="button" class="btn btn-default pull-right">Edit</button>
+        </div>
+        <div class="col-xs-1">
+            <button id="btnDelete" type="button" class="btn btn-default pull-right">Delete</button>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px">
+        <div class="col-xs-12">
+            <table id="tree"></table>
+        </div>
+    </div>
+    <div id="dialog" style="display: none">
+        <input type="hidden" id="Id" />
+        <input type="hidden" id="ParentId" />
+        <form>
+            <div class="form-group">
+                <label for="Code">Code</label>
+                <input type="text" class="form-control" id="Code">
+            </div>
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control" id="Name">
+            </div>
+            <div class="form-row">
+                <button type="button" id="btnSave" class="btn btn-default">Save</button>
+                <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div id="tree"></div>
+</div>
 
