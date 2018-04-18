@@ -220,6 +220,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\DistributorModel.cs" />
+    <Compile Include="Models\FieldForceModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MarketHierarchyModel.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BrandViewModel.cs" />
     <Compile Include="ViewModels\DistributorViewModel.cs" />
+    <Compile Include="ViewModels\FieldForceViewModel.cs" />
     <Compile Include="ViewModels\MarketHierarchyViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
@@ -271,6 +273,7 @@
     <Content Include="Assets\Css\gijgo\modular\timepicker.min.css" />
     <Content Include="Assets\Css\gijgo\modular\tree.css" />
     <Content Include="Assets\Css\gijgo\modular\tree.min.css" />
+    <Content Include="Assets\Scripts\basic\fieldforce.js" />
     <Content Include="Assets\Scripts\basic\mh.js" />
     <Content Include="Assets\Scripts\basic\product.js" />
     <Content Include="favicon.ico" />

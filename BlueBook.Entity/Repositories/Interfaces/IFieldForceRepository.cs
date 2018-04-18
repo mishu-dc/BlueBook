@@ -13,5 +13,7 @@ namespace BlueBook.Entity.Repositories.Interfaces
         IEnumerable<FieldForce> GetFieldForceByDistributorId(int distributorId);
         IEnumerable<FieldForce> GetFieldForceByDistributors(List<Distributor> distributors);
         IEnumerable<FieldForce> GetFieldForceByDistributorIds(List<int> distributorIds);
+        Task<List<FieldForce>> GetFieldForceByPageAsync(int? page, int? limit, string sortBy, string direction, string code, string name, int? distributorId);
+        Task<int> GetTotalFieldForceAsync(int? page, int? limit, string sortBy, string direction, string code, string name, int? distributorId);
     }
 }
