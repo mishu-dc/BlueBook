@@ -31,3 +31,5 @@ _ReSharper*/
 #Nuget packages folder
 packages/
 *.log
+*.mdf
+*.ldf
