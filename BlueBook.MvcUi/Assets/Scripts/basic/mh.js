@@ -22,7 +22,7 @@ function Save() {
     $.ajax({ url: '/MarketHierarchy/SaveAsync', data: { record: node }, method: 'POST' })
         .done(function (newNode) {
             dialog.close();
-            if (node.Id === "0") {
+            if (node.Id === "0" || node.Id === "") {
                 var parentNode = tree.getNodeById(node.ParentId);
                 tree.addNode(newNode, parentNode);
             } else {
@@ -84,8 +84,14 @@ $(document).ready(function () {
             $('#Name').val('');
             $('#ParentId').val(selectedNode.id);
             dialog.open('Add chield under ' + selectedNode.name);
-            $('#Code').focus();
+        } else {
+            $('#Id').val('');
+            $('#Code').val('');
+            $('#Name').val('');
+            $('#ParentId').val('');
+            dialog.open('Add First Level');
         }
+        $('#Code').focus();
     });
 
     $('#btnEdit').on('click', function () {
