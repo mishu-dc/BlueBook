@@ -27,7 +27,7 @@ namespace BlueBook.MvcUi.Controllers
         {
             try
             {
-                logger.Debug("Brand Controller List action method is invoked");
+                logger.Debug("Search Controller GetBrands action method is invoked");
 
                 BrandModel model = new BrandModel(_unitOfWork);
 
@@ -37,7 +37,26 @@ namespace BlueBook.MvcUi.Controllers
             }
             catch (Exception ex)
             {
-                logger.Error("Error while invoking List action method: ", ex);
+                logger.Error("Error while invoking GetBrands action method: ", ex);
+                return this.Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public async Task<JsonResult> GetDistributors()
+        {
+            try
+            {
+                logger.Debug("Search Controller GetDistributors action method is invoked");
+
+                DistributorModel model = new DistributorModel(_unitOfWork);
+
+                List<Distributor> records = await model.GetDistributorsByPageAsync(null, null, string.Empty, string.Empty, string.Empty, string.Empty);
+
+                return this.Json(records.Select(x => new { Id = x.Id, Name = x.Name }), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error while invoking GetDistributors action method: ", ex);
                 return this.Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
