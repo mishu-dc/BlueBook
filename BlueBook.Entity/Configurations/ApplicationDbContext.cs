@@ -12,7 +12,7 @@ namespace BlueBook.DataAccess.Configurations
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("BlueBook", throwIfV1Schema: false)
+            : base("name=BlueBook")
         {
         }
 
