@@ -32,6 +32,8 @@ namespace BlueBook.DataAccess.Tests
             Assert.AreEqual(dbFieldForce.Code, fieldForce.Code);
             Assert.AreEqual(dbFieldForce.Email, fieldForce.Email);
             Assert.AreEqual(dbFieldForce.Phone, fieldForce.Phone);
+
+            Assert.IsNotNull(dbFieldForce.Address);
         }
 
         [TestMethod]

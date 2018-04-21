@@ -49,14 +49,16 @@ namespace BlueBook.MvcUi.Controllers
                         AddressLine2 = f.Address != null ? f.Address.AddressLine2 : string.Empty,
                         City = f.Address != null ? f.Address.City : string.Empty,
                         State = f.Address != null ? f.Address.State : string.Empty,
-                        Zip = f.Address != null ? f.Address.Zip : string.Empty,
+                        ZipCode = f.Address != null ? f.Address.Zip : string.Empty,
                         Code = f.Code,
                         Email = f.Email,
                         Id = f.Id,
                         MarketHierarchyId = f.MarketHierarchy != null ? f.MarketHierarchy.Id : 0,
+                        MarketHierarchy = f.MarketHierarchy !=null? f.MarketHierarchy.Type + "-" + f.MarketHierarchy.Name: "-",
                         Name = f.Name,
                         Phone = f.Phone,
-                        DistributorIds = f.Distributors.Select(x => x.Id).ToList<int>()
+                        DistributorIds = f.Distributors.Select(x => x.Id).ToList<int>(),
+                        Distributors = f.Distributors.Select(x=>x.Name).ToList<string>()
                     }),
                     total
                 }, JsonRequestBehavior.AllowGet);

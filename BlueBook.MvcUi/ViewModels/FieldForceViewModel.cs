@@ -16,12 +16,18 @@ namespace BlueBook.MvcUi.ViewModels
         [Required]
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string MarketHierarchy { get; set; }
         public int? MarketHierarchyId { get; set; }
         public List<int> DistributorIds { get; set; }
+        public List<string> Distributors { get; set; }
+        [Required]
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
+        [Required]
         public string City { get; set; }
+        [Required]
         public string State { get; set; }
-        public string Zip { get; set; }
+        [Required]
+        public string ZipCode { get; set; }
     }
 }

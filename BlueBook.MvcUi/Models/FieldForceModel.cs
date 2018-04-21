@@ -33,13 +33,10 @@ namespace BlueBook.MvcUi.Models
         {
             FieldForce fieldForce = null;
             FieldForceAddress address = null;
-            MarketHierarchy mh = null;
-
             
-
             if (record.Id != null)
             {
-                fieldForce = _unitOfWork.FieldForces.Get(record.Id.Value);
+                fieldForce = await _unitOfWork.FieldForces.GetAsync(record.Id.Value);
                 if (fieldForce == null)
                 {
                     throw new Exception("Invalid Fieldforce Id");
@@ -52,15 +49,18 @@ namespace BlueBook.MvcUi.Models
             else
             {
                 fieldForce = new FieldForce();
-                _unitOfWork.FieldForces.Add(fieldForce);
-
                 fieldForce.CreatedBy = System.Web.HttpContext.Current.User.Identity.Name;
             }
 
             if (address == null)
             {
                 address = new FieldForceAddress();
-                fieldForce.Address = address;
+                address.CreatedBy = System.Web.HttpContext.Current.User.Identity.Name;
+            }
+            else
+            {
+                address.UpdatedBy = System.Web.HttpContext.Current.User.Identity.Name;
+                address.UpdatedDate = DateTime.Today;
             }
 
             fieldForce.Code = record.Code;
@@ -72,12 +72,11 @@ namespace BlueBook.MvcUi.Models
             address.AddressLine2 = record.AddressLine2;
             address.City = record.City;
             address.State = record.State;
-            address.Zip = record.Zip;
+            address.Zip = record.ZipCode;
 
-            if(record.MarketHierarchyId!=null)
-                mh = _unitOfWork.MarketHierarchies.Get(record.MarketHierarchyId.Value);
+            fieldForce.Address = address;
 
-            fieldForce.MarketHierarchy = mh;
+            fieldForce.MarketHierarchyId = record.MarketHierarchyId;
             
 
             if (fieldForce.Distributors != null)
@@ -99,6 +98,11 @@ namespace BlueBook.MvcUi.Models
                         fieldForce.Distributors.Add(distributor);
                     }
                 }
+            }
+
+            if (fieldForce.Id <= 0)
+            {
+                _unitOfWork.FieldForces.Add(fieldForce);
             }
             
             return await _unitOfWork.CompleteAsync();

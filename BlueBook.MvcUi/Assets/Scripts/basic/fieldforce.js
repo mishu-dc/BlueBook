@@ -6,16 +6,30 @@ var tree;
 var selectedData;
 
 function Edit(e) {
-    $('#Id').val(e.data.id);
-    $('#Code').val(e.data.record.Code);
-    $('#Name').val(e.data.record.Name);
-    $('#Phone').val(e.data.record.Phone);
-    $('#Email').val(e.data.record.Email);
-    $("#AddressLine1").val(e.data.record.AddressLine1);
-    $("#AddressLine2").val(e.data.record.AddressLine2);
-    $('#City').val(e.data.record.City);
-    $("#State").val(e.data.record.State);
-    $("#ZipCode").val(e.data.record.ZipCode);
+    var record = e.data.record;
+
+    $('#Id').val(record.Id);
+    $('#Code').val(record.Code);
+    $('#Name').val(record.Name);
+    $('#Phone').val(record.Phone);
+    $('#Email').val(record.Email);
+    $("#AddressLine1").val(record.AddressLine1);
+    $("#AddressLine2").val(record.AddressLine2);
+    $('#City').val(record.City);
+    $("#State").val(record.State);
+    $("#ZipCode").val(record.ZipCode);
+
+    $.each(record.DistributorIds, function (i, l) {
+        $("input[type=checkbox][value="  + l + "]").prop("checked", true);    
+    });
+
+    var tNode = tree.getNodeById(record.MarketHierarchyId);
+    if (tNode !==undefined){
+        tree.select(tNode);
+        $('input[name=hdMhId]').val(record.MarketHierarchyId);
+        $(".mhTree").text(tNode[0].textContent);
+    }
+    
     ffDialog.open('Edit Field Force');
 }
 
@@ -42,7 +56,7 @@ function Save() {
 
     $.ajax({ url: '/Fieldforce/SaveAsync', data: { record: record }, method: 'POST' })
         .done(function () {
-            dialog.close();
+            ffDialog.close();
             grid.reload({ code: $('#txtCode').val(), name: $('#txtName').val(), distributorId: $('#optDristributor').val() });
         })
         .fail(function () {
@@ -72,7 +86,7 @@ $(document).ready(function () {
             { field: 'Code', width: 100, sortable: true },
             { field: 'Name', width: 200, sortable: true },
             { field: 'Distributors', width: 200, sortable: false },
-            { field: 'Market Hierarcy', width: 200, sortable: false },
+            { field: 'MarketHierarchy', title:'Market Hierarcy', width: 200, sortable: false },
             { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Edit', events: { 'click': Edit } },
             { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
         ],
@@ -112,7 +126,7 @@ $(document).ready(function () {
                     .append($('<label>').attr({ for: value.Name }).text(this.Name)));
             });
 
-            var options = $("#optDristributor");
+            options = $("#optDristributor");
             options.append(new Option("Select a distributor", "-1"));
             $.each(data, function (key, value) {
                 options.append(new Option(value.Name, value.Id));
@@ -153,6 +167,7 @@ $(document).ready(function () {
 
     $('#btnAdd').on('click', function () {
         $('#Id').val('');
+        $('#Name').val('');
         $('#Code').val('');
         $('#Phone').val('');
         $('#Email').val('');
@@ -179,6 +194,6 @@ $(document).ready(function () {
         $('#txtName').val('');
         $("#optDristributor").val(-1);
 
-        grid.reload({ code: '', name: '' });
+        grid.reload({ code: '', name: '', distributorId: $('#optDristributor').val()  });
     });
 });
