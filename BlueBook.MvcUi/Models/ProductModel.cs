@@ -35,7 +35,7 @@ namespace BlueBook.MvcUi.Models
 
             if (record.Id != null)
             {
-                product = _unitOfWork.Products.Get(record.Id.Value);
+                product = await _unitOfWork.Products.GetAsync(record.Id.Value);
                 if (product == null)
                 {
                     throw new Exception("Invalid Product Id");
@@ -51,7 +51,7 @@ namespace BlueBook.MvcUi.Models
                 product.CreatedBy = System.Web.HttpContext.Current.User.Identity.Name;
             }
 
-            brand = _unitOfWork.Brands.Get(record.BrandId);
+            brand = await _unitOfWork.Brands.GetAsync(record.BrandId);
 
             if(brand==null)
             {
