@@ -335,7 +335,9 @@
     <Content Include="Assets\Scripts\gijgo\modular\timepicker.min.js" />
     <Content Include="Assets\Scripts\gijgo\modular\tree.js" />
     <Content Include="Assets\Scripts\gijgo\modular\tree.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -374,6 +376,7 @@
     <Content Include="Views\Brand\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\FieldForce\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

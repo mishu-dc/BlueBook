@@ -33,3 +33,4 @@ packages/
 *.log
 *.mdf
 *.ldf
+*.pubxml

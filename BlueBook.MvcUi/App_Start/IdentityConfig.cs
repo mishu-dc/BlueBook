@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using BlueBook.MvcUi.Models;
+using BlueBook.DataAccess.Entities;
+using BlueBook.DataAccess.Configurations;
 
 namespace BlueBook.MvcUi
 {

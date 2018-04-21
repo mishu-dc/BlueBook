@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using BlueBook.MvcUi.Models;
+using BlueBook.DataAccess.Configurations;
+using BlueBook.DataAccess.Entities;
 
 namespace BlueBook.MvcUi
 {

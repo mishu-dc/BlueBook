@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BlueBook.MvcUi.Models;
+using BlueBook.DataAccess.Entities;
 
 namespace BlueBook.MvcUi.Controllers
 {
@@ -151,7 +152,7 @@ namespace BlueBook.MvcUi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email , DateOfBirth = DateTime.Now};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
