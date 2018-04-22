@@ -6,7 +6,7 @@ var tree;
 var selectedData;
 
 function ClearValidation() {
-    $("form[name = 'form-fieldforce']").validate().resetForm();
+    $("form[name = 'form-ff']").validate().resetForm();
     $(".error").removeClass('error');
 }
 
@@ -41,6 +41,8 @@ function Edit(e) {
 }
 
 function Save() {
+    if (!$("form[name = 'form-ff']").valid()) return;
+
     var ids = [];
     $('#Distributors :checked').each(function () {
         ids.push($(this).val());

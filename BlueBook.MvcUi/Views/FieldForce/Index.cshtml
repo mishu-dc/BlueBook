@@ -4,12 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="~/Assets/Scripts/basic/fieldforce.js"></script>
-    <script type="text/javascript" src="~/Assets/Scripts/validations/fieldforce-validation.js"></script>
-}
-
 <h2>Field Forces</h2>
 
 <div class="container-full">
@@ -45,23 +39,23 @@
     </div>
 
     <div id="ffDialog" style="display: none">
-        <input type="hidden" id="Id" />
-        <form>
+        <form name="form-ff">
+            <input type="hidden" id="Id" />
             <div class="form-group">
                 <label for="Code">Code</label>
-                <input type="text" class="form-control" id="Code">
+                <input type="text" class="form-control" id="Code" name="Code">
             </div>
             <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" class="form-control" id="Name">
+                <input type="text" class="form-control" id="Name" name="Name">
             </div>
             <div class="form-group">
                 <label for="Phone">Phone</label>
-                <input type="text" class="form-control" id="Phone">
+                <input type="text" class="form-control" id="Phone" name="Phone">
             </div>
             <div class="form-group">
                 <label for="Email">Email</label>
-                <input type="text" class="form-control" id="Email">
+                <input type="text" class="form-control" id="Email" name="Email">
             </div>
             <div class="form-group">
                 <label for="ZipCode">Distributors</label>
@@ -74,23 +68,23 @@
             </div>
             <div class="form-group">
                 <label for="AddressLine1">Address Line 1</label>
-                <input type="text" class="form-control" id="AddressLine1">
+                <input type="text" class="form-control" id="AddressLine1" name="AddressLine1">
             </div>
             <div class="form-group">
                 <label for="AddressLine2">Address Line 2</label>
-                <input type="text" class="form-control" id="AddressLine2">
+                <input type="text" class="form-control" id="AddressLine2" name="AddressLine2">
             </div>
             <div class="form-group">
                 <label for="City">City</label>
-                <input type="text" class="form-control" id="City">
+                <input type="text" class="form-control" id="City" name="City">
             </div>
             <div class="form-group">
                 <label for="State">State</label>
-                <input type="text" class="form-control" id="State">
+                <input type="text" class="form-control" id="State" name="State">
             </div>
             <div class="form-group">
                 <label for="ZipCode">Zip Code</label>
-                <input type="text" class="form-control" id="ZipCode">
+                <input type="text" class="form-control" id="ZipCode" name="ZipCode">
             </div>
             <button type="button" id="btnSave" class="btn btn-default">Save</button>
             <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
@@ -99,4 +93,9 @@
 </div>
 
 
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Assets/Scripts/basic/fieldforce.js"></script>
+    <script type="text/javascript" src="~/Assets/Scripts/validations/fieldforce-validation.js"></script>
+}
 

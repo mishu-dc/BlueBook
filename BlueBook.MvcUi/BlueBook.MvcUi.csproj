@@ -275,8 +275,10 @@
     <Content Include="Assets\Scripts\basic\fieldforce.js" />
     <Content Include="Assets\Scripts\basic\mh.js" />
     <Content Include="Assets\Scripts\basic\product.js" />
+    <Content Include="Assets\Scripts\jQuery\additional-methods.js" />
     <Content Include="Assets\Scripts\validations\brand-validation.js" />
     <Content Include="Assets\Scripts\validations\distributor-validation.js" />
+    <Content Include="Assets\Scripts\validations\fieldforce-validation.js" />
     <Content Include="Assets\Scripts\validations\mh-validation.js" />
     <Content Include="Assets\Scripts\validations\product-validation.js" />
     <Content Include="favicon.ico" />

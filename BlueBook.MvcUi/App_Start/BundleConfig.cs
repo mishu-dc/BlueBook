@@ -12,7 +12,8 @@ namespace BlueBook.MvcUi
                         "~/Assets/Scripts/jQuery/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Assets/Scripts/jQuery/jquery.validate*"));
+                        "~/Assets/Scripts/jQuery/jquery.validate*",
+                        "~/Assets/Scripts/jQuery/additional-methods.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Assets/Scripts/bootstrap/bootstrap.js"));
