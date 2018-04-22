@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+form .error {
+    color: #ff0000;
+}
+
+.form-control.error {
+    border: 2px solid #ea5555;
+}

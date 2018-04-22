@@ -9,6 +9,8 @@ function Edit(e) {
     dialog.open('Edit Brand');
 }
 function Save() {
+    if (!$("form[name = 'form-brand']").valid()) return;
+
     var record = {
         Id: $('#Id').val(),
         Code: $('#Code').val(),
