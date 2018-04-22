@@ -276,6 +276,7 @@
     <Content Include="Assets\Scripts\basic\mh.js" />
     <Content Include="Assets\Scripts\basic\product.js" />
     <Content Include="Assets\Scripts\validations\brand-validation.js" />
+    <Content Include="Assets\Scripts\validations\distributor-validation.js" />
     <Content Include="favicon.ico" />
     <Content Include="Assets\Css\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

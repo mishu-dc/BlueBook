@@ -12,8 +12,8 @@ $(document).ready(function () {
         },
         // Specify validation error messages
         messages: {
-            Code: "Please enter Code",
-            Name: "Please enter Name"
+            Code: "Code is required",
+            Name: "Name is required",
         },
         // Make sure the form is submitted to the destination defined
         // in the "action" attribute of the form when valid

@@ -10,6 +10,9 @@ function Edit(e) {
     dialog.open('Edit Distributor');
 }
 function Save() {
+
+    if (!$("form[name = 'form-distritubor']").valid()) return;
+
     var record = {
         Id: $('#Id').val(),
         Code: $('#Code').val(),
