@@ -5,8 +5,15 @@ var mhDialog;
 var tree;
 var selectedData;
 
+function ClearValidation() {
+    $("form[name = 'form-fieldforce']").validate().resetForm();
+    $(".error").removeClass('error');
+}
+
 function Edit(e) {
     var record = e.data.record;
+
+    ClearValidation();
 
     $('#Id').val(record.Id);
     $('#Code').val(record.Code);
@@ -175,6 +182,7 @@ $(document).ready(function () {
         $("#AddressLine2").val('');
         $("#State").val('');
         $("#ZipCode").val('');
+        ClearValidation();
         ffDialog.open('Add Field Force');
         $('#Code').focus();
     });

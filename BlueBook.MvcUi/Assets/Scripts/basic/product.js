@@ -2,16 +2,23 @@
 var grid;
 var dialog;
 
+function ClearValidation() {
+    $("form[name = 'form-product']").validate().resetForm();
+    $(".error").removeClass('error');
+}
+
 function Edit(e) {
     $('#Id').val(e.data.id);
     $('#Code').val(e.data.record.Code);
     $('#Name').val(e.data.record.Name);
     $('#Price').val(e.data.record.Price);
     $("#Brand").val(e.data.record.BrandId);
-    
+    ClearValidation();
     dialog.open('Edit Product');
 }
 function Save() {
+    if (!$("form[name = 'form-product']").valid()) return;
+
     var record = {
         Id: $('#Id').val(),
         Code: $('#Code').val(),
@@ -88,6 +95,7 @@ $(document).ready(function () {
         $('#Code').val('');
         $('#Name').val('');
         $('#Price').val('');
+        ClearValidation();
         dialog.open('Add Product');
         $('#Code').focus();
     });

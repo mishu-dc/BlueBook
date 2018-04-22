@@ -5,7 +5,9 @@
 }
 
 @section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Assets/Scripts/basic/product.js"></script>
+    <script type="text/javascript" src="~/Assets/Scripts/validations/product-validation.js"></script>
 }
 
 <h2>Distributors</h2>
@@ -37,26 +39,26 @@
         </div>
     </div>
     <div id="dialog" style="display: none">
-        <input type="hidden" id="Id" />
-        <form>
+        <form name="form-product">
+            <input type="hidden" id="Id" />
             <div class="form-group">
                 <label for="Code">Code</label>
-                <input type="text" class="form-control" id="Code">
+                <input type="text" class="form-control" id="Code" name="Code">
             </div>
             <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" class="form-control" id="Name">
+                <input type="text" class="form-control" id="Name" name="Name">
             </div>
             <div class="form-group">
                 <label for="Brand">Brand</label>
-                <select id="Brand" class="form-control"></select>
+                <select id="Brand" class="form-control" name="Brand"></select>
             </div>
             <div class="form-group">
                 <label for="Price">Price</label>
-                <input type="text" class="form-control" id="Price" />
+                <input type="text" class="form-control numbersOnly" id="Price" name="Price" />
             </div>
             <div class="form-row">
-                <button type="button" id="btnSave" class="btn btn-default">Save</button>
+                <button type="submit" id="btnSave" class="btn btn-default">Save</button>
                 <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
             </div>
         </form>

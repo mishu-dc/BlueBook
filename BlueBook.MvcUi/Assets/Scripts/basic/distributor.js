@@ -2,11 +2,17 @@
 var grid;
 var dialog;
 
+function ClearValidation() {
+    $("form[name='form-distritubor']").validate().resetForm();
+    $(".error").removeClass('error');
+}
+
 function Edit(e) {
     $('#Id').val(e.data.id);
     $('#Code').val(e.data.record.Code);
     $('#Name').val(e.data.record.Name);
     $('#Address').val(e.data.record.Address);
+    ClearValidation();
     dialog.open('Edit Distributor');
 }
 function Save() {
@@ -71,6 +77,7 @@ $(document).ready(function () {
         $('#Name').val('');
         $('#Address').val('');
         $('#Code').focus();
+        ClearValidation();
         dialog.open('Add Distributor');
     });
 

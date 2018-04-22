@@ -2,7 +2,13 @@
 var grid;
 var dialog;
 
+function ClearValidation() {
+    $("form[name = 'form-brand']").validate().resetForm();
+    $(".error").removeClass('error');
+}
+
 function Edit(e) {
+    ClearValidation();
     $('#Id').val(e.data.id);
     $('#Code').val(e.data.record.Code);
     $('#Name').val(e.data.record.Name);
@@ -62,9 +68,11 @@ $(document).ready(function () {
     });
 
     $('#btnAdd').on('click', function () {
+        ClearValidation();
         $('#Id').val('');
         $('#Code').val('');
         $('#Name').val('');
+
         dialog.open('Add Brand');
         $('#Code').focus();
     });
