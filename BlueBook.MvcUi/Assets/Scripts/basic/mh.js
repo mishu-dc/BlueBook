@@ -3,7 +3,13 @@ var tree;
 var dialog;
 var selectedNode;
 
+function ClearValidation() {
+    $("form[name = 'form-mh']").validate().resetForm();
+    $(".error").removeClass('error');
+}
+
 function Edit(node) {
+    ClearValidation();
     $('#Id').val(node.id);
     $('#ParentId').val(node.parentId);
     $('#Code').val(node.code);
@@ -11,6 +17,7 @@ function Edit(node) {
     dialog.open('Edit ' + node.name + " (" + node.type + ")");
 }
 function Save() {
+    if (!$("form[name = 'form-mh']").valid()) return;
     var node = {
         Id: $('#Id').val(),
         Code: $('#Code').val(),
@@ -64,10 +71,6 @@ $(document).ready(function () {
 
     tree.on('select', function (e, node, id) {
         selectedNode = tree.getDataById(id);
-        if (node.text().trim().split('-')[1] !== undefined)
-            selectedNode.name = node.text().trim().split('-')[1]
-        if (node.text().trim().split('-')[0] !== undefined)
-            selectedNode.code = node.text().trim().split('-')[0]
     });
     
     dialog = $('#dialog').dialog({
@@ -91,6 +94,7 @@ $(document).ready(function () {
             $('#ParentId').val('');
             dialog.open('Add First Level');
         }
+        ClearValidation();
         $('#Code').focus();
     });
 
