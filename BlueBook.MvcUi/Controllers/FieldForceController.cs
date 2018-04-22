@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace BlueBook.MvcUi.Controllers
 {
+    [Authorize]
     public class FieldForceController : Controller
     {
         readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

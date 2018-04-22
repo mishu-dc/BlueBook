@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace BlueBook.MvcUi.Controllers
 {
+    [Authorize]
     public class DistributorController : Controller
     {
 
