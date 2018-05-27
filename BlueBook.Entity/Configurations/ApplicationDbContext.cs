@@ -21,13 +21,7 @@ namespace BlueBook.DataAccess.Configurations
         {
 
         }
-
-        DbSet<Brand> Brands { get; set; }
-        DbSet<Product> Products { get; set; }
-        DbSet<MarketHierarchy> MarketHierarchies { get; set; }
-        DbSet<FieldForce> FieldForces { get; set; }
-        DbSet<Distributor> Distributors { get; set; }
-
+        
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
