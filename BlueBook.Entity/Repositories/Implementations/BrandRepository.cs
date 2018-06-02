@@ -86,5 +86,18 @@ namespace BlueBook.Entity.Repositories.Implementations
 
             return await query.ToListAsync();
         }
+
+        public async Task<List<Brand>> GetBrandsAsync()
+        {
+            var query = ConstractQuery(string.Empty, string.Empty,string.Empty, string.Empty);
+            
+            return await query.ToListAsync();
+        }
+
+        public async Task<Brand> GetBrandAsync(int Id)
+        {
+            Brand brand = await Context.Set<Brand>().FindAsync(Id);
+            return brand;
+        }
     }
 }
