@@ -207,6 +207,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
+    <Compile Include="Controllers\CorsTestController.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\FieldForceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -244,6 +245,7 @@
     <Content Include="Assets\Css\bootstrap\bootstrap.css" />
     <Content Include="Assets\Css\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\Scripts\basic\brand.js" />
+    <Content Include="Assets\Scripts\basic\corsTest.js" />
     <Content Include="Assets\Scripts\basic\distributor.js" />
     <Content Include="Assets\Css\gijgo\combined\demo.css" />
     <Content Include="Assets\Css\gijgo\combined\demo.min.css" />
@@ -382,6 +384,7 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\FieldForce\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Views\CorsTest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
