@@ -8,10 +8,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BlueBook.WebApi.Controllers
 {
     [RoutePrefix("api/brands")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BrandsController : ApiController
     {
         private readonly UnitOfWork _unitOfWork = null;
