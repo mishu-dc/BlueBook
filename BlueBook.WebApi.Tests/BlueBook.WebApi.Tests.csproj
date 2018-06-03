@@ -110,7 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlueBook.WebApi\BlueBook.WebApi.csproj">
-      <Project>{2FF9E6A0-3B6D-469F-93E6-0DE176044B4D}</Project>
+      <Project>{2ff9e6a0-3b6d-469f-93e6-0de176044b4d}</Project>
       <Name>BlueBook.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
