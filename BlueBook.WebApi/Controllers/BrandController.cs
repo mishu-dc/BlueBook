@@ -12,7 +12,6 @@ using System.Web.Http.Cors;
 
 namespace BlueBook.WebApi.Controllers
 {
-    [RoutePrefix("api/brands")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BrandsController : ApiController
     {
@@ -25,22 +24,22 @@ namespace BlueBook.WebApi.Controllers
             _logger.Info("Brand Web Api Controller Initialized successfully");
         }
 
-        [Route("")]
+        [Route("api/brands/{code?}/{name?}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetBrandsAsync()
+        public async Task<IHttpActionResult> GetBrandsByCodeAndNameAsync(string code="", string name="")
         {
             try
             {
                 IEnumerable<Brand> brands = null;
-                brands = await _unitOfWork.Brands.GetBrandsAsync();
+                brands = await _unitOfWork.Brands.GetBrandsAsync(code, name);
 
                 _logger.Info(string.Format("Total {0} brnad(s) found", brands.Count()));
 
                 return Ok(brands.Select(d => new BrandDto()
                 {
-                    Id = d.Id,
-                    Code = d.Code,
-                    Name = d.Name
+                    id = d.Id,
+                    code = d.Code,
+                    name = d.Name
                 }));
             }
             catch (Exception ex)
@@ -71,9 +70,9 @@ namespace BlueBook.WebApi.Controllers
                 
                 return Ok(new BrandDto()
                 {
-                    Id = brand.Id,
-                    Code = brand.Code,
-                    Name = brand.Name
+                    id = brand.Id,
+                    code = brand.Code,
+                    name = brand.Name
                 });
             }
             catch (Exception ex)
@@ -89,6 +88,7 @@ namespace BlueBook.WebApi.Controllers
 
         [HttpPost]
         [ActionName("Save")]
+        [Route("api/brands/save")]
         public async Task<IHttpActionResult> SaveBrandAsync(BrandDto record)
         {
             Brand brand = null;
@@ -96,9 +96,9 @@ namespace BlueBook.WebApi.Controllers
             {
                 try
                 {
-                    if (record.Id != null)
+                    if (record.id != null)
                     {
-                        brand = _unitOfWork.Brands.Get(record.Id.Value);
+                        brand = _unitOfWork.Brands.Get(record.id.Value);
                         if (brand == null)
                         {
                             return NotFound();
@@ -115,8 +115,8 @@ namespace BlueBook.WebApi.Controllers
                         brand.CreatedBy = "web:api";
                     }
 
-                    brand.Code = record.Code;
-                    brand.Name = record.Name;
+                    brand.Code = record.code;
+                    brand.Name = record.name;
 
                     await _unitOfWork.CompleteAsync();
 

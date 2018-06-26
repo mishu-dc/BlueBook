@@ -17,7 +17,7 @@ namespace BlueBook.Entity.Repositories.Implementations
         {
 
         }
-
+        
         private IQueryable<Brand> ConstractQuery(string sortBy, string direction, string code, string name)
         {
             var query = Context.Set<Brand>().Where(q => q.Id > 0);
@@ -74,6 +74,12 @@ namespace BlueBook.Entity.Repositories.Implementations
             return await query.CountAsync();
         }
 
+        public async Task<List<Brand>> GetBrandsAsync(string code, string name)
+        {
+            var query = ConstractQuery("name", "asc", code, name);
+            return await query.ToListAsync();
+        }
+
         public async Task<List<Brand>> GetBrandsByPageAsync(int? page, int? limit, string sortBy, string direction, string code, string name)
         {
             var query = ConstractQuery(sortBy, direction, code, name);
@@ -99,5 +105,7 @@ namespace BlueBook.Entity.Repositories.Implementations
             Brand brand = await Context.Set<Brand>().FindAsync(Id);
             return brand;
         }
+
+       
     }
 }
