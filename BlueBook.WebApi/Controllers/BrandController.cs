@@ -96,6 +96,11 @@ namespace BlueBook.WebApi.Controllers
             {
                 try
                 {
+                    if (record == null)
+                    {
+                        return BadRequest();
+                    }
+
                     if (record.id != null)
                     {
                         brand = _unitOfWork.Brands.Get(record.id.Value);
