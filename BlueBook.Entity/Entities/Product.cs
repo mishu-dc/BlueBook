@@ -10,7 +10,7 @@ namespace BlueBook.DataAccess.Entities
     {
         public string Code { get; set; }
         public string Name { get; set; }
-        public Brand Brand { get; set; }
+        public virtual Brand Brand { get; set; }
         public int BrandId { get; set; }
         public double Price { get; set; }
     }

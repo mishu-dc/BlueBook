@@ -71,6 +71,13 @@ namespace BlueBook.Entity.Repositories.Implementations
             return query;
         }
 
+        public async Task<List<Product>> GetProductsAsync(string code, string name, int brandId)
+        {
+            var query = ConstractQuery("name", "asc", code, name, brandId);
+            var products = await query.Include(p=>p.Brand).ToListAsync();
+            return products;
+        }
+
         public async Task<List<Product>> GetProductsByPageAsync(int? page, int? limit, string sortBy, string direction, string code, string name, int? brandId)
         {
             var query = ConstractQuery(sortBy, direction, code, name, brandId);
@@ -89,6 +96,12 @@ namespace BlueBook.Entity.Repositories.Implementations
             var query = ConstractQuery(sortBy, direction, code, name, brandId);
 
             return await query.CountAsync();
+        }
+
+        public async Task<Product> GetProductAsync(int id)
+        {
+            Product product = await Context.Set<Product>().FindAsync(id);
+            return product;
         }
     }
 }

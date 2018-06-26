@@ -11,6 +11,7 @@ namespace BlueBook.Entity.Repositories.Interfaces
     {
         Task<Brand> GetBrandAsync(int id);
         Task<List<Brand>> GetBrandsAsync();
+        Task<List<Brand>> GetBrandsAsync(string code, string name);
         Task<List<Brand>> GetBrandsByPageAsync(int? page, int? limit, string sortBy, string direction, string code, string name);
         Task<int> GetTotalBrandsAsync(int? page, int? limit, string sortBy, string direction, string code, string name);
     }
