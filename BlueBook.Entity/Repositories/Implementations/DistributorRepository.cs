@@ -86,5 +86,12 @@ namespace BlueBook.Entity.Repositories.Implementations
 
             return await query.ToListAsync();
         }
+
+        public async Task<List<Distributor>> GetDistributorsAsync(string code, string name)
+        {
+            var query = ConstractQuery("name", "asc", code, name);
+
+            return await query.ToListAsync();
+        }
     }
 }
