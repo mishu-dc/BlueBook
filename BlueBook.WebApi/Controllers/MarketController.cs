@@ -1,0 +1,163 @@
+﻿using BlueBook.DataAccess.Entities;
+using BlueBook.Entity.Configurations;
+using BlueBook.WebApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Cors;
+
+namespace BlueBook.WebApi.Controllers
+{
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    public class MarketController : ApiController
+    {
+        private readonly UnitOfWork _unitOfWork = null;
+        private readonly log4net.ILog _logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public MarketController(UnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+            _logger.Info("Market Web Api Controller Initialized successfully");
+        }
+
+        [Route("api/markets/{code?}/{name?}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetMarketHierarchiesByCodeAndNameAsync(string code = "", string name = "")
+        {
+            try
+            {
+                IEnumerable<MarketHierarchy> markets = null;
+                markets = await _unitOfWork.MarketHierarchies.GetMarketsAsync(code, name);
+
+                _logger.Info(string.Format("Total {0} brnad(s) found", markets.Count()));
+
+                return Ok(markets.Select(d => new MarketHierarchyDto()
+                {
+                    id = d.Id,
+                    code = d.Code,
+                    name = d.Name,
+                    type = d.Type,
+                    parentId = d.ParentId
+                }));
+            }
+            catch (Exception ex)
+            {
+                if (_logger.IsDebugEnabled)
+                {
+                    _logger.Debug(ex);
+                    return InternalServerError(ex);
+                }
+                return InternalServerError();
+            }
+        }
+
+        [Route("{id:int}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetMarketHierarchyAsync(int id)
+        {
+            try
+            {
+
+                MarketHierarchy market = await _unitOfWork.MarketHierarchies.GetAsync(id);
+
+                if (market == null)
+                {
+                    _logger.Info(string.Format("No market found with id", id));
+                    return NotFound();
+                }
+
+                return Ok(new MarketHierarchyDto()
+                {
+                    id = market.Id,
+                    code = market.Code,
+                    name = market.Name,
+                    type = market.Type,
+                    parentId = market.ParentId
+                });
+            }
+            catch (Exception ex)
+            {
+                if (_logger.IsDebugEnabled)
+                {
+                    _logger.Debug(ex);
+                    return InternalServerError(ex);
+                }
+                return InternalServerError();
+            }
+        }
+
+        [HttpPost]
+        [ActionName("Save")]
+        [Route("api/markets/save")]
+        public async Task<IHttpActionResult> SaveMarketHierarchyAsync(MarketHierarchyDto record)
+        {
+            MarketHierarchy market = null;
+            MarketHierarchy parent = null;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (record == null)
+                    {
+                        return BadRequest();
+                    }
+
+                    if (record.parentId != null)
+                    {
+                        parent = _unitOfWork.MarketHierarchies.Get(record.parentId.Value);
+                        if(parent == null)
+                        {
+                            return BadRequest("Invalid parent market id");
+                        }
+                    }
+
+                    if (record.id != null)
+                    {
+                        market = _unitOfWork.MarketHierarchies.Get(record.id.Value);
+                        if (market == null)
+                        {
+                            return BadRequest("Invalid market id");
+                        }
+
+                        market.UpdatedBy = "web:api";
+                        market.UpdatedDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        market = new MarketHierarchy();
+                        _unitOfWork.MarketHierarchies.Add(market);
+
+                        market.CreatedBy = "web:api";
+                    }
+
+                    market.Code = record.code;
+                    market.Name = record.name;
+                    market.Type = record.type;
+                    market.Parent = parent;
+                    
+
+                    await _unitOfWork.CompleteAsync();
+
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    if (_logger.IsDebugEnabled)
+                    {
+                        _logger.Debug(ex);
+                        return InternalServerError(ex);
+                    }
+                    return InternalServerError();
+                }
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+    }
+}

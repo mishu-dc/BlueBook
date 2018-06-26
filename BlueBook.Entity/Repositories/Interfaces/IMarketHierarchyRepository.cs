@@ -9,6 +9,6 @@ namespace BlueBook.Entity.Repositories.Interfaces
 {
     public interface IMarketHierarchyRepository:IRepository<MarketHierarchy>
     {
-
+        Task<List<MarketHierarchy>> GetMarketsAsync(string code, string name);
     }
 }
