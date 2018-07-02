@@ -118,5 +118,12 @@ namespace BlueBook.Entity.Repositories.Implementations
 
             return await query.ToListAsync();
         }
+         
+        public async Task<List<FieldForce>> GetFieldForcesAsync(string code, string name, int distributorId)
+        {
+            var query = ConstractQuery("name", "asc", code, name, distributorId);
+            
+            return await query.Include(d=>d.MarketHierarchy).Include(d=>d.Distributors).ToListAsync();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace BlueBook.Entity.Repositories.Interfaces
 {
     public interface IFieldForceRepository : IRepository<FieldForce>
     {
+        Task<List<FieldForce>> GetFieldForcesAsync(string code, string name, int distributorId);
         IEnumerable<FieldForce> GetFieldForceByMarketHierarchyId(int marketHierarchyId);
         IEnumerable<FieldForce> GetFieldForceByDistributorId(int distributorId);
         IEnumerable<FieldForce> GetFieldForceByDistributors(List<Distributor> distributors);
