@@ -9,14 +9,14 @@ namespace BlueBook.WebApi.Models
 {
     public class MarketHierarchyDto
     {
-        public int? id { get; set; }
+        public int? Id { get; set; }
         [Required]
-        public string code { get; set; }
+        public string Code { get; set; }
         [Required]
-        public string name { get; set; }
-        public int? parentId { get; set; }
+        public string Name { get; set; }
+        public int? ParentId { get; set; }
 
         [Required]
-        public MarketHierarchyType type { get; set; }
+        public MarketHierarchyType Type { get; set; }
     }
 }

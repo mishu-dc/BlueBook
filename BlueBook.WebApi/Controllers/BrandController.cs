@@ -37,9 +37,9 @@ namespace BlueBook.WebApi.Controllers
 
                 return Ok(brands.Select(d => new BrandDto()
                 {
-                    id = d.Id,
-                    code = d.Code,
-                    name = d.Name
+                    Id = d.Id,
+                    Code = d.Code,
+                    Name = d.Name
                 }));
             }
             catch (Exception ex)
@@ -70,9 +70,9 @@ namespace BlueBook.WebApi.Controllers
                 
                 return Ok(new BrandDto()
                 {
-                    id = brand.Id,
-                    code = brand.Code,
-                    name = brand.Name
+                    Id = brand.Id,
+                    Code = brand.Code,
+                    Name = brand.Name
                 });
             }
             catch (Exception ex)
@@ -101,9 +101,9 @@ namespace BlueBook.WebApi.Controllers
                         return BadRequest();
                     }
 
-                    if (record.id != null)
+                    if (record.Id != null)
                     {
-                        brand = _unitOfWork.Brands.Get(record.id.Value);
+                        brand = _unitOfWork.Brands.Get(record.Id.Value);
                         if (brand == null)
                         {
                             return NotFound();
@@ -120,8 +120,8 @@ namespace BlueBook.WebApi.Controllers
                         brand.CreatedBy = "web:api";
                     }
 
-                    brand.Code = record.code;
-                    brand.Name = record.name;
+                    brand.Code = record.Code;
+                    brand.Name = record.Name;
 
                     await _unitOfWork.CompleteAsync();
 

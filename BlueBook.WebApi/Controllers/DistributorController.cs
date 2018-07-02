@@ -38,10 +38,10 @@ namespace BlueBook.WebApi.Controllers
 
                 return Ok(distributors.Select(d => new DistributorDto()
                 {
-                    id = d.Id,
-                    code = d.Code,
-                    name = d.Name,
-                    address = d.Address
+                    Id = d.Id,
+                    Code = d.Code,
+                    Name = d.Name,
+                    Address = d.Address
                 }));
             }
             catch (Exception ex)
@@ -72,10 +72,10 @@ namespace BlueBook.WebApi.Controllers
                 
                 return Ok(new DistributorDto()
                 {
-                    id = distributor.Id,
-                    code = distributor.Code,
-                    name = distributor.Name,
-                    address = distributor.Address
+                    Id = distributor.Id,
+                    Code = distributor.Code,
+                    Name = distributor.Name,
+                    Address = distributor.Address
                 });
             }
             catch (Exception ex)
@@ -104,9 +104,9 @@ namespace BlueBook.WebApi.Controllers
                         return BadRequest();
                     }
 
-                    if (record.id != null)
+                    if (record.Id != null)
                     {
-                        distributor = _unitOfWork.Distributors.Get(record.id.Value);
+                        distributor = _unitOfWork.Distributors.Get(record.Id.Value);
                         if (distributor == null)
                         {
                             return NotFound();
@@ -123,9 +123,9 @@ namespace BlueBook.WebApi.Controllers
                         distributor.CreatedBy = "web:api";
                     }
 
-                    distributor.Code = record.code;
-                    distributor.Name = record.name;
-                    distributor.Address = record.address;
+                    distributor.Code = record.Code;
+                    distributor.Name = record.Name;
+                    distributor.Address = record.Address;
 
                     await _unitOfWork.CompleteAsync();
 

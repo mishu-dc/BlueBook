@@ -8,12 +8,12 @@ namespace BlueBook.WebApi.Models
 {
     public class DistributorDto
     {
-        public int? id { get; set; }
+        public int? Id { get; set; }
         [Required]
-        public string code { get; set; }
+        public string Code { get; set; }
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public string address { get; set; }
+        public string Address { get; set; }
     }
 }

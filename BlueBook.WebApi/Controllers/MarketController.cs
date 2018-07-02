@@ -37,11 +37,11 @@ namespace BlueBook.WebApi.Controllers
 
                 return Ok(markets.Select(d => new MarketHierarchyDto()
                 {
-                    id = d.Id,
-                    code = d.Code,
-                    name = d.Name,
-                    type = d.Type,
-                    parentId = d.ParentId
+                    Id = d.Id,
+                    Code = d.Code,
+                    Name = d.Name,
+                    Type = d.Type,
+                    ParentId = d.ParentId
                 }));
             }
             catch (Exception ex)
@@ -72,11 +72,11 @@ namespace BlueBook.WebApi.Controllers
 
                 return Ok(new MarketHierarchyDto()
                 {
-                    id = market.Id,
-                    code = market.Code,
-                    name = market.Name,
-                    type = market.Type,
-                    parentId = market.ParentId
+                    Id = market.Id,
+                    Code = market.Code,
+                    Name = market.Name,
+                    Type = market.Type,
+                    ParentId = market.ParentId
                 });
             }
             catch (Exception ex)
@@ -106,18 +106,18 @@ namespace BlueBook.WebApi.Controllers
                         return BadRequest();
                     }
 
-                    if (record.parentId != null)
+                    if (record.ParentId != null)
                     {
-                        parent = _unitOfWork.MarketHierarchies.Get(record.parentId.Value);
+                        parent = _unitOfWork.MarketHierarchies.Get(record.ParentId.Value);
                         if(parent == null)
                         {
                             return BadRequest("Invalid parent market id");
                         }
                     }
 
-                    if (record.id != null)
+                    if (record.Id != null)
                     {
-                        market = _unitOfWork.MarketHierarchies.Get(record.id.Value);
+                        market = _unitOfWork.MarketHierarchies.Get(record.Id.Value);
                         if (market == null)
                         {
                             return BadRequest("Invalid market id");
@@ -134,9 +134,9 @@ namespace BlueBook.WebApi.Controllers
                         market.CreatedBy = "web:api";
                     }
 
-                    market.Code = record.code;
-                    market.Name = record.name;
-                    market.Type = record.type;
+                    market.Code = record.Code;
+                    market.Name = record.Name;
+                    market.Type = record.Type;
                     market.Parent = parent;
                     
 

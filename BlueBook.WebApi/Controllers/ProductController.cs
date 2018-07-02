@@ -36,12 +36,12 @@ namespace BlueBook.WebApi.Controllers
 
                 var results = products.Select(d => new ProductDto()
                 {
-                    id = d.Id,
-                    code = d.Code,
-                    name = d.Name,
-                    brandId = d.Brand != null ? d.Brand.Id : -1,
-                    brandName = d.Brand != null ? d.Brand.Name : "-",
-                    price = d.Price
+                    Id = d.Id,
+                    Code = d.Code,
+                    Name = d.Name,
+                    BrandId = d.Brand != null ? d.Brand.Id : -1,
+                    BrandName = d.Brand != null ? d.Brand.Name : "-",
+                    Price = d.Price
                 });
 
                 return Ok(results);
@@ -74,12 +74,12 @@ namespace BlueBook.WebApi.Controllers
 
                 return Ok(new ProductDto()
                 {
-                    id = product.Id,
-                    code = product.Code,
-                    name = product.Name,
-                    brandId = product.Brand!=null? product.Brand.Id: -1,
-                    brandName = product.Brand!=null? product.Brand.Name: "-",
-                    price = product.Price
+                    Id = product.Id,
+                    Code = product.Code,
+                    Name = product.Name,
+                    BrandId = product.Brand!=null? product.Brand.Id: -1,
+                    BrandName = product.Brand!=null? product.Brand.Name: "-",
+                    Price = product.Price
                 });
             }
             catch (Exception ex)
@@ -108,15 +108,15 @@ namespace BlueBook.WebApi.Controllers
                         return BadRequest();
                     }
 
-                    Brand brand = _unitOfWork.Brands.Get(record.brandId);
+                    Brand brand = _unitOfWork.Brands.Get(record.BrandId);
                     if (brand == null)
                     {
                         return NotFound();
                     }
 
-                    if (record.id != null)
+                    if (record.Id != null)
                     {
-                        product = _unitOfWork.Products.Get(record.id.Value);
+                        product = _unitOfWork.Products.Get(record.Id.Value);
                         if (product == null)
                         {
                             return NotFound();
@@ -133,10 +133,10 @@ namespace BlueBook.WebApi.Controllers
                         product.CreatedBy = "web:api";
                     }
 
-                    product.Code = record.code;
-                    product.Name = record.name;
+                    product.Code = record.Code;
+                    product.Name = record.Name;
                     product.Brand = brand;
-                    product.Price = record.price;
+                    product.Price = record.Price;
 
                     await _unitOfWork.CompleteAsync();
 

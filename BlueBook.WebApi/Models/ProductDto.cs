@@ -8,15 +8,15 @@ namespace BlueBook.WebApi.Models
 {
     public class ProductDto
     {
-        public int? id { get; set; }
+        public int? Id { get; set; }
         [Required]
-        public string code { get; set; }
+        public string Code { get; set; }
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
         [Required]
-        public int brandId { get; set; }
-        public string brandName { get; set; }
+        public int BrandId { get; set; }
+        public string BrandName { get; set; }
         [Required]
-        public double price { get; set; }
+        public double Price { get; set; }
     }
 }
