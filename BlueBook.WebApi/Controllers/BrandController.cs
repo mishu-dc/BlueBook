@@ -33,7 +33,7 @@ namespace BlueBook.WebApi.Controllers
                 IEnumerable<Brand> brands = null;
                 brands = await _unitOfWork.Brands.GetBrandsAsync(code, name);
 
-                _logger.Info(string.Format("Total {0} brnad(s) found", brands.Count()));
+                _logger.Info(string.Format("Total {0} brands(s) found", brands.Count()));
 
                 return Ok(brands.Select(d => new BrandDto()
                 {

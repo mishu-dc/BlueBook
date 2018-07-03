@@ -33,7 +33,7 @@ namespace BlueBook.WebApi.Controllers
                 IEnumerable<MarketHierarchy> markets = null;
                 markets = await _unitOfWork.MarketHierarchies.GetMarketsAsync(code, name);
 
-                _logger.Info(string.Format("Total {0} brnad(s) found", markets.Count()));
+                _logger.Info(string.Format("Total {0} markets(s) found", markets.Count()));
 
                 return Ok(markets.Select(d => new MarketHierarchyDto()
                 {
