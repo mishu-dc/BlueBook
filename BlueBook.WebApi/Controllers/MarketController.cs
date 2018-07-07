@@ -24,25 +24,29 @@ namespace BlueBook.WebApi.Controllers
             _logger.Info("Market Web Api Controller Initialized successfully");
         }
 
-        [Route("api/markets/{code?}/{name?}")]
+        [Route("api/markets/")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetMarketHierarchiesByCodeAndNameAsync(string code = "", string name = "")
+        public async Task<IHttpActionResult> GetMarketHierarchiesByCodeAndNameAsync()
         {
             try
             {
-                IEnumerable<MarketHierarchy> markets = null;
-                markets = await _unitOfWork.MarketHierarchies.GetMarketsAsync(code, name);
+                List<MarketHierarchy> markets = null;
+                markets = await _unitOfWork.MarketHierarchies.FindAsync(x=>x.Id>0);
 
                 _logger.Info(string.Format("Total {0} markets(s) found", markets.Count()));
 
-                return Ok(markets.Select(d => new MarketHierarchyDto()
-                {
-                    Id = d.Id,
-                    Code = d.Code,
-                    Name = d.Name,
-                    Type = d.Type,
-                    ParentId = d.ParentId
-                }));
+                var records = markets.Where(x => x.ParentId == null)
+                    .Select(m => new MarketHierarchyDto()
+                    {
+                        Id = m.Id,
+                        Code = m.Code,
+                        Name = m.Code + "-" + m.Name,
+                        Type = m.Type,
+                        ParentId = m.ParentId != null ? m.ParentId.Value : -1,
+                        Chields = GetChildren(markets, m.Id)
+                    }).ToList();
+
+                return Ok(records);
             }
             catch (Exception ex)
             {
@@ -53,6 +57,22 @@ namespace BlueBook.WebApi.Controllers
                 }
                 return InternalServerError();
             }
+        }
+
+        private List<MarketHierarchyDto> GetChildren(List<MarketHierarchy> mhs, int? parentId)
+        {
+            var records = mhs.Where(x => x.ParentId == parentId.Value)
+                    .Select(m => new MarketHierarchyDto()
+                    {
+                        Id = m.Id,
+                        Code = m.Code,
+                        Name = m.Code + "-" + m.Name,
+                        Type = m.Type,
+                        ParentId = m.ParentId != null ? m.ParentId.Value : -1,
+                        Chields = GetChildren(mhs, m.Id)
+                    }).ToList();
+
+            return records;
         }
 
         [Route("{id:int}")]
