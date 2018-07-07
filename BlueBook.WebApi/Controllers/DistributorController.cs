@@ -27,22 +27,25 @@ namespace BlueBook.WebApi.Controllers
 
         [Route("api/distributors/{code?}/{name?}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetDistributorsByCodeAndNameAsync(string code="", string name="")
+        public async Task<IHttpActionResult> GetDistributorsByCodeAndNameAsync(string code = "", string name = "", string sortBy = "name", string direction = "asc", int page = 1, int size = int.MaxValue)
         {
             try
             {
                 IEnumerable<Distributor> distributors = null;
-                distributors = await _unitOfWork.Distributors.GetDistributorsAsync(code, name);
+                distributors = await _unitOfWork.Distributors.GetDistributorsByPageAsync(page, size, sortBy, direction, code, name);
+                int total = await _unitOfWork.Distributors.GetTotalDistributorsAsync(page, size, sortBy, direction, code, name);
 
                 _logger.Info(string.Format("Total {0} distributor(s) found", distributors.Count()));
 
-                return Ok(distributors.Select(d => new DistributorDto()
+                var results = distributors.Select(d => new DistributorDto()
                 {
                     Id = d.Id,
                     Code = d.Code,
                     Name = d.Name,
                     Address = d.Address
-                }));
+                });
+
+                return Ok(new { total, results });
             }
             catch (Exception ex)
             {

@@ -26,21 +26,25 @@ namespace BlueBook.WebApi.Controllers
 
         [Route("api/brands/{code?}/{name?}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetBrandsByCodeAndNameAsync(string code="", string name="")
+        public async Task<IHttpActionResult> GetBrandsByCodeAndNameAsync(string code = "", string name = "", string sortBy = "name", string direction = "asc", int page = 1, int size = int.MaxValue)
         {
             try
             {
                 IEnumerable<Brand> brands = null;
-                brands = await _unitOfWork.Brands.GetBrandsAsync(code, name);
+                brands = await _unitOfWork.Brands.GetBrandsByPageAsync(page, size, sortBy, direction, code, name);
+
+                int total = await _unitOfWork.Brands.GetTotalBrandsAsync(page, size, sortBy, direction, code, name);
 
                 _logger.Info(string.Format("Total {0} brands(s) found", brands.Count()));
 
-                return Ok(brands.Select(d => new BrandDto()
+                var results = brands.Select(d => new BrandDto()
                 {
                     Id = d.Id,
                     Code = d.Code,
                     Name = d.Name
-                }));
+                });
+
+                return Ok(new { total, results }); 
             }
             catch (Exception ex)
             {

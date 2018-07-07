@@ -23,14 +23,16 @@ namespace BlueBook.WebApi.Controllers
             _logger.Info("Product Web Api Controller Initialized successfully");
         }
 
-        [Route("api/products/{code?}/{name?}/{productId?}")]
+        [Route("api/products/")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetProductsByCodeAndNameAsync(string code = "", string name = "", int brandId=-1)
+        public async Task<IHttpActionResult> GetProductsByCodeAndNameAsync(string code = "", string name = "", string sortBy = "name", string direction = "asc", int brandId = -1, int page = 1, int size = int.MaxValue)
         {
             try
             {
                 IEnumerable<Product> products = null;
-                products = await _unitOfWork.Products.GetProductsAsync(code, name, brandId);
+                
+                int total = await _unitOfWork.Products.GetTotalProductsAsync(page, size, sortBy, direction, code, name, brandId);
+                products = await _unitOfWork.Products.GetProductsByPageAsync(page, size, sortBy, direction, code, name, brandId);
 
                 _logger.Info(string.Format("Total {0} brnad(s) found", products.Count()));
 
@@ -44,7 +46,7 @@ namespace BlueBook.WebApi.Controllers
                     Price = d.Price
                 });
 
-                return Ok(results);
+                return Ok(new { total, results});
             }
             catch (Exception ex)
             {
@@ -77,8 +79,8 @@ namespace BlueBook.WebApi.Controllers
                     Id = product.Id,
                     Code = product.Code,
                     Name = product.Name,
-                    BrandId = product.Brand!=null? product.Brand.Id: -1,
-                    BrandName = product.Brand!=null? product.Brand.Name: "-",
+                    BrandId = product.Brand != null ? product.Brand.Id : -1,
+                    BrandName = product.Brand != null ? product.Brand.Name : "-",
                     Price = product.Price
                 });
             }

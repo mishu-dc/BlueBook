@@ -26,12 +26,13 @@ namespace BlueBook.WebApi.Controllers
 
         [Route("api/fieldforces/{code?}/{name?}/{fieldforceId?}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetFieldForcesByCodeAndNameAsync(string code = "", string name = "", int distributorId = -1)
+        public async Task<IHttpActionResult> GetFieldForcesByCodeAndNameAsync(string code = "", string name = "", string sortBy = "name", string direction = "asc", int page = 1, int size = 10, int distributorId = -1)
         {
             try
             {
                 IEnumerable<FieldForce> fieldforces = null;
-                fieldforces = await _unitOfWork.FieldForces.GetFieldForcesAsync(code, name, distributorId);
+                fieldforces = await _unitOfWork.FieldForces.GetFieldForceByPageAsync(page, size, sortBy, direction, code, name, distributorId);
+                int total = await _unitOfWork.FieldForces.GetTotalFieldForceAsync(page, size, sortBy, direction, code, name, distributorId);
 
                 _logger.Info(string.Format("Total {0} brnad(s) found", fieldforces.Count()));
 
@@ -53,7 +54,7 @@ namespace BlueBook.WebApi.Controllers
                     DistributorIds = ff.Distributors!=null? ff.Distributors.Select(d=>d.Id).ToList(): new List<int>()
                 });
 
-                return Ok(results);
+                return Ok(new { total,  results });
             }
             catch (Exception ex)
             {
