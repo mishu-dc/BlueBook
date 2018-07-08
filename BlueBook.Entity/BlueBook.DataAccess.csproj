@@ -75,6 +75,10 @@
     <Compile Include="Migrations\201803220234388_InitialMigration.Designer.cs">
       <DependentUpon>201803220234388_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807081633542_MakeUserDOBNullable.cs" />
+    <Compile Include="Migrations\201807081633542_MakeUserDOBNullable.Designer.cs">
+      <DependentUpon>201807081633542_MakeUserDOBNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Implementations\BrandRepository.cs" />
@@ -97,6 +101,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201803220234388_InitialMigration.resx">
       <DependentUpon>201803220234388_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807081633542_MakeUserDOBNullable.resx">
+      <DependentUpon>201807081633542_MakeUserDOBNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
