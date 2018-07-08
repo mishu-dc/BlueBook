@@ -10,6 +10,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using BlueBook.WebApi.Models;
+using BlueBook.DataAccess.Entities;
 
 namespace BlueBook.WebApi.Providers
 {
@@ -30,6 +31,8 @@ namespace BlueBook.WebApi.Providers
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
