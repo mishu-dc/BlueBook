@@ -36,7 +36,7 @@ namespace BlueBook.WebApi.Controllers
 
                 _logger.Info(string.Format("Total {0} brnad(s) found", fieldforces.Count()));
 
-                var results = fieldforces.Select(ff => new FieldForceDto()
+                var items = fieldforces.Select(ff => new FieldForceDto()
                 {
                     Id = ff.Id,
                     Code = ff.Code,
@@ -54,7 +54,7 @@ namespace BlueBook.WebApi.Controllers
                     DistributorIds = ff.Distributors!=null? ff.Distributors.Select(d=>d.Id).ToList(): new List<int>()
                 });
 
-                return Ok(new { total,  results });
+                return Ok(new { total, items });
             }
             catch (Exception ex)
             {

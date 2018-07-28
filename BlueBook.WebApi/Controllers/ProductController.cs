@@ -36,7 +36,7 @@ namespace BlueBook.WebApi.Controllers
 
                 _logger.Info(string.Format("Total {0} brnad(s) found", products.Count()));
 
-                var results = products.Select(d => new ProductDto()
+                var items = products.Select(d => new ProductDto()
                 {
                     Id = d.Id,
                     Code = d.Code,
@@ -46,7 +46,7 @@ namespace BlueBook.WebApi.Controllers
                     Price = d.Price
                 });
 
-                return Ok(new { total, results});
+                return Ok(new { total, items });
             }
             catch (Exception ex)
             {

@@ -37,7 +37,7 @@ namespace BlueBook.WebApi.Controllers
 
                 _logger.Info(string.Format("Total {0} distributor(s) found", distributors.Count()));
 
-                var results = distributors.Select(d => new DistributorDto()
+                var items = distributors.Select(d => new DistributorDto()
                 {
                     Id = d.Id,
                     Code = d.Code,
@@ -45,7 +45,7 @@ namespace BlueBook.WebApi.Controllers
                     Address = d.Address
                 });
 
-                return Ok(new { total, results });
+                return Ok(new { total, items });
             }
             catch (Exception ex)
             {

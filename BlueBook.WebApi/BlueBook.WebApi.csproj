@@ -237,7 +237,6 @@
     <Compile Include="Models\BrandDto.cs" />
     <Compile Include="Models\DistributorDto.cs" />
     <Compile Include="Models\FieldForceDto.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MarketHierarchyDto.cs" />
     <Compile Include="Models\ProductDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

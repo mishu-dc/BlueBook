@@ -37,14 +37,14 @@ namespace BlueBook.WebApi.Controllers
 
                 _logger.Info(string.Format("Total {0} brands(s) found", brands.Count()));
 
-                var results = brands.Select(d => new BrandDto()
+                var items = brands.Select(d => new BrandDto()
                 {
                     Id = d.Id,
                     Code = d.Code,
                     Name = d.Name
                 });
 
-                return Ok(new { total, results }); 
+                return Ok(new { total, items }); 
             }
             catch (Exception ex)
             {
