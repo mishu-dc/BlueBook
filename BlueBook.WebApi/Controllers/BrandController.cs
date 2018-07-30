@@ -53,7 +53,7 @@ namespace BlueBook.WebApi.Controllers
                     _logger.Debug(ex);
                     return InternalServerError(ex);
                 }
-                return InternalServerError();
+                return InternalServerError(ex);
             }
         }
 
