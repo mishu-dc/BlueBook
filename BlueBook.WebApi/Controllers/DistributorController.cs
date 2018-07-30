@@ -25,7 +25,7 @@ namespace BlueBook.WebApi.Controllers
             _logger.Info("Distributor Web Api Controller Initialized successfully");
         }
 
-        [Route("api/distributors/{code?}/{name?}")]
+        [Route("api/distributors/")]
         [HttpGet]
         public async Task<IHttpActionResult> GetDistributorsByCodeAndNameAsync(string code = "", string name = "", string sortBy = "name", string direction = "asc", int page = 1, int size = int.MaxValue)
         {

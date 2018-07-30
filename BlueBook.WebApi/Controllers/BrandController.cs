@@ -24,7 +24,7 @@ namespace BlueBook.WebApi.Controllers
             _logger.Info("Brand Web Api Controller Initialized successfully");
         }
 
-        [Route("api/brands/{code?}/{name?}")]
+        [Route("api/brands/")]
         [HttpGet]
         public async Task<IHttpActionResult> GetBrandsByCodeAndNameAsync(string code = "", string name = "", string sortBy = "name", string direction = "asc", int page = 1, int size = int.MaxValue)
         {
@@ -53,7 +53,7 @@ namespace BlueBook.WebApi.Controllers
                     _logger.Debug(ex);
                     return InternalServerError(ex);
                 }
-                return InternalServerError(ex);
+                return InternalServerError();
             }
         }
 

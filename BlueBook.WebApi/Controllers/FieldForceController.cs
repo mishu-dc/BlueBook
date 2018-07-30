@@ -24,7 +24,7 @@ namespace BlueBook.WebApi.Controllers
             _logger.Info("Field Force Web Api Controller Initialized successfully");
         }
 
-        [Route("api/fieldforces/{code?}/{name?}/{fieldforceId?}")]
+        [Route("api/fieldforces/")]
         [HttpGet]
         public async Task<IHttpActionResult> GetFieldForcesByCodeAndNameAsync(string code = "", string name = "", string sortBy = "name", string direction = "asc", int page = 1, int size = 10, int distributorId = -1)
         {
