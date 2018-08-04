@@ -39,7 +39,7 @@ namespace BlueBook.WebApi
                 TokenEndpointPath = new PathString("/token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(10),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(120),
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true
             };
