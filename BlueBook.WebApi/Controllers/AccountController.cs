@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using System.Linq;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -17,11 +18,13 @@ using BlueBook.WebApi.Models;
 using BlueBook.WebApi.Providers;
 using BlueBook.WebApi.Results;
 using BlueBook.DataAccess.Entities;
+using System.Web.Http.Cors;
 
 namespace BlueBook.WebApi.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -119,9 +122,12 @@ namespace BlueBook.WebApi.Controllers
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || model==null)
             {
-                return BadRequest(ModelState);
+                string messages = string.Join(" ", ModelState.Values
+                                       .SelectMany(x => x.Errors)
+                                       .Select(x => x.ErrorMessage).FirstOrDefault());
+                return BadRequest(messages);
             }
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
@@ -129,10 +135,10 @@ namespace BlueBook.WebApi.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                return BadRequest(result.Errors.ToList()[0]);
             }
 
-            return Ok();
+            return Ok(new { status = "success" });
         }
 
         // POST api/Account/SetPassword
@@ -324,9 +330,12 @@ namespace BlueBook.WebApi.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || model==null)
             {
-                return BadRequest(ModelState);
+                string messages = string.Join(" ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage).FirstOrDefault());
+                return BadRequest(messages);
             }
             try
             {
@@ -336,10 +345,10 @@ namespace BlueBook.WebApi.Controllers
 
                 if (!result.Succeeded)
                 {
-                    return GetErrorResult(result);
+                    return BadRequest(result.Errors.ToList()[0]);
                 }
 
-                return Ok();
+                return Ok(new { status = "success" });
             }
             catch(Exception ex)
             {

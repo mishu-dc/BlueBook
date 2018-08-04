@@ -12,6 +12,7 @@ using System.Web.Http.Cors;
 
 namespace BlueBook.WebApi.Controllers
 {
+    [Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DistributorController : ApiController
     {
@@ -132,7 +133,7 @@ namespace BlueBook.WebApi.Controllers
 
                     await _unitOfWork.CompleteAsync();
 
-                    return Ok();
+                    return Ok(new { status = "success" });
                 }
                 catch (Exception ex)
                 {
