@@ -283,8 +283,8 @@
     <Content Include="Assets\Scripts\validations\fieldforce-validation.js" />
     <Content Include="Assets\Scripts\validations\mh-validation.js" />
     <Content Include="Assets\Scripts\validations\product-validation.js" />
-    <Content Include="favicon.ico" />
     <Content Include="Assets\Css\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="favicon.png" />
     <Content Include="Global.asax" />
     <Content Include="Assets\Css\Site.css" />
     <Content Include="ApplicationInsights.config">
